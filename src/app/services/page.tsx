@@ -106,7 +106,7 @@ const serviceDetails = [
     cta: "/contact",
     ctaLabel: "Book a Consultation",
   },
-] as const;
+];
 
 export default function ServicesPage() {
   return (

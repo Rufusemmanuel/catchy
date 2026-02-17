@@ -18,7 +18,13 @@ export const brandConfig = {
   },
 } as const;
 
-export const services = [
+export interface Service {
+  name: string;
+  description: string;
+  highlight?: boolean;
+}
+
+export const services: Service[] = [
   {
     name: "Catchy Verifs (FREE)",
     description:
@@ -59,4 +65,4 @@ export const services = [
     description:
       "Paid campaign setup, creative testing, optimization, and reporting across channels.",
   },
-] as const;
+];
