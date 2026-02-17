@@ -4,27 +4,28 @@ import { brandConfig, services } from "@/config/brand";
 
 export default function HomePage() {
   return (
-    <div className="mx-auto max-w-6xl space-y-16 px-4 pb-16 pt-12 sm:px-6 lg:px-8">
-      <section className="reveal-up grid gap-6 rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100 md:grid-cols-2 md:p-12">
+    <div className="mx-auto max-w-6xl space-y-16 px-4 pb-16 pt-10 md:px-6 md:pt-12 lg:px-8">
+      <section className="reveal-up grid gap-6 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-100 sm:p-6 md:grid-cols-2 md:p-12">
         <div>
           <p className="inline-flex rounded-full bg-[var(--brand-accent-soft)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-accent)]">
             Growth Agency
           </p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-[var(--brand-accent)] md:text-5xl">
+          <h1 className="mt-4 max-w-3xl text-3xl font-bold tracking-tight text-[var(--brand-accent)] [text-wrap:balance] sm:text-4xl md:text-5xl">
             Grow faster with trust-led marketing that proves your credibility.
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-slate-600">
             Catchy combines strategy, execution, and visibility systems that
             make people trust your brand before they even message you.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <CtaButton href="/catchy-verifs">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <CtaButton href="/catchy-verifs" className="w-full justify-center whitespace-nowrap sm:w-auto">
               Apply for a Free Catchy Verif
             </CtaButton>
             <CtaButton
               href="/contact"
               variant="consultation"
               consultationStyle="secondary"
+              className="w-full justify-center whitespace-nowrap sm:w-auto"
             >
               Book a Consultation
             </CtaButton>

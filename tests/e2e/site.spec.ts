@@ -9,6 +9,37 @@ test("Home loads with header and navigation", async ({ page }) => {
   await expect(page.getByRole("link", { name: "Services" })).toBeVisible();
 });
 
+test("Mobile header shows primary CTA + hamburger and menu content", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+  });
+  const page = await context.newPage();
+
+  await page.goto("/");
+
+  const header = page.getByRole("banner");
+  const hamburger = header.getByRole("button", { name: "Open menu" });
+  await expect(hamburger).toBeVisible();
+  await expect(header.getByRole("link", { name: "Services" })).toHaveCount(0);
+
+  const applyCta = header.getByRole("link", {
+    name: "Apply for a Free Catchy Verif",
+  });
+  await expect(applyCta).toHaveCount(1);
+  await expect(applyCta).toBeVisible();
+
+  await hamburger.click();
+  const mobileMenu = page.locator("#mobile-nav-menu");
+  await expect(mobileMenu.getByRole("link", { name: "Services" })).toBeVisible();
+  await expect(
+    mobileMenu.getByRole("link", { name: "Book a Consultation" })
+  ).toBeVisible();
+
+  await context.close();
+});
+
 test("Apply for a Free Catchy Verif CTA reaches catchy-verifs page", async ({
   page,
 }) => {
