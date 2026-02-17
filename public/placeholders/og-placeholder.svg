@@ -1,0 +1,7 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#f8fafc"/>
+  <rect x="70" y="80" width="1060" height="470" rx="36" fill="#ffffff" stroke="#e2e8f0"/>
+  <circle cx="210" cy="210" r="64" fill="#d8c4ff"/>
+  <text x="320" y="230" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="#0f172a">Catchy</text>
+  <text x="320" y="290" font-family="Arial, sans-serif" font-size="34" fill="#334155">Credibility-first growth marketing</text>
+</svg>
