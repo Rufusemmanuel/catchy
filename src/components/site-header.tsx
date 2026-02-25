@@ -9,7 +9,7 @@ import { brandConfig } from "@/config/brand";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/catchy-verifs", label: "Catchy Verifs" },
+  { href: "/catchy-verification", label: "Catchy Verification" },
   { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -40,7 +40,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="text-xl font-bold tracking-tight text-[var(--brand-accent)]"
+          className="text-xl font-bold tracking-tight text-slate-900"
         >
           Catchy
         </Link>
@@ -49,7 +49,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-slate-600 transition hover:text-slate-900"
+              className="text-sm font-medium text-gray-600 transition hover:text-slate-900"
             >
               {item.label}
             </Link>
@@ -61,12 +61,12 @@ export function SiteHeader() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Catchy Instagram"
-            className="inline-flex rounded-full p-2 text-slate-500 transition hover:bg-[var(--brand-accent-soft)] hover:text-[var(--brand-accent)]"
+            className="inline-flex rounded-full p-2 text-gray-500 transition hover:bg-slate-100 hover:text-[var(--accent-link)]"
           >
             <InstagramIcon />
           </Link>
-          <CtaButton href="/catchy-verifs" className="whitespace-nowrap">
-            Apply for a Free Catchy Verif
+          <CtaButton href="/catchy-verification" className="whitespace-nowrap">
+            Apply for Catchy Verification
           </CtaButton>
           <CtaButton
             href="/contact"
@@ -79,10 +79,10 @@ export function SiteHeader() {
         </div>
         <div className="flex items-center gap-2 md:hidden">
           <CtaButton
-            href="/catchy-verifs"
+            href="/catchy-verification"
             className="max-w-[220px] px-3 py-2 text-xs whitespace-nowrap"
           >
-            Apply for a Free Catchy Verif
+            Apply for Catchy Verification
           </CtaButton>
           <button
             type="button"
@@ -90,7 +90,7 @@ export function SiteHeader() {
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-nav-menu"
             onClick={() => setIsMobileMenuOpen(true)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-gray-600"
           >
             <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden>
               <path
@@ -115,7 +115,7 @@ export function SiteHeader() {
                 type="button"
                 aria-label="Close menu"
                 onClick={closeMobileMenu}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-gray-600"
               >
                 <svg
                   viewBox="0 0 20 20"
@@ -139,7 +139,7 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   onClick={closeMobileMenu}
-                  className="rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                  className="rounded-xl px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-slate-50"
                 >
                   {item.label}
                 </Link>
@@ -151,7 +151,7 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMobileMenu}
-              className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-[var(--brand-accent)] ring-1 ring-[var(--brand-accent)]/25 transition hover:bg-[var(--brand-accent-soft)] whitespace-nowrap"
+              className="mt-4 inline-flex h-10 w-full items-center justify-center rounded-xl border border-[var(--button-primary)] bg-white px-6 text-sm font-semibold text-[var(--button-primary)] shadow-sm transition-colors hover:bg-[#7C3AED]/10 hover:shadow-md active:bg-[#7C3AED]/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30 whitespace-nowrap"
             >
               Book a Consultation
             </a>
@@ -163,7 +163,7 @@ export function SiteHeader() {
                 rel="noopener noreferrer"
                 aria-label="Catchy Instagram"
                 onClick={closeMobileMenu}
-                className="inline-flex rounded-full p-2 text-slate-500 transition hover:bg-[var(--brand-accent-soft)] hover:text-[var(--brand-accent)]"
+                className="inline-flex rounded-full p-2 text-gray-500 transition hover:bg-slate-100 hover:text-[var(--accent-link)]"
               >
                 <InstagramIcon />
               </Link>
@@ -173,7 +173,7 @@ export function SiteHeader() {
                 rel="noopener noreferrer"
                 aria-label="Catchy X"
                 onClick={closeMobileMenu}
-                className="inline-flex rounded-full p-2 text-slate-500 transition hover:bg-[var(--brand-accent-soft)] hover:text-[var(--brand-accent)]"
+                className="inline-flex rounded-full p-2 text-gray-500 transition hover:bg-slate-100 hover:text-[var(--accent-link)]"
               >
                 <XIcon />
               </Link>
@@ -183,7 +183,7 @@ export function SiteHeader() {
                 rel="noopener noreferrer"
                 aria-label="Catchy TikTok"
                 onClick={closeMobileMenu}
-                className="inline-flex rounded-full p-2 text-slate-500 transition hover:bg-[var(--brand-accent-soft)] hover:text-[var(--brand-accent)]"
+                className="inline-flex rounded-full p-2 text-gray-500 transition hover:bg-slate-100 hover:text-[var(--accent-link)]"
               >
                 <TikTokIcon />
               </Link>

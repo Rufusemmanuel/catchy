@@ -5,11 +5,11 @@ import { describe, expect, it } from "vitest";
 describe("CtaButton", () => {
   it("renders a link with label", () => {
     render(
-      <CtaButton href="/catchy-verifs">Apply for a Free Catchy Verif</CtaButton>
+      <CtaButton href="/catchy-verification">Apply for Catchy Verification</CtaButton>
     );
 
     expect(
-      screen.getByRole("link", { name: "Apply for a Free Catchy Verif" })
+      screen.getByRole("link", { name: "Apply for Catchy Verification" })
     ).toBeInTheDocument();
   });
 

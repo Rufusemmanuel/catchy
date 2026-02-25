@@ -12,14 +12,14 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-10 px-4 pb-16 pt-12 sm:px-6 lg:px-8">
       <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-        <h1 className="text-4xl font-bold tracking-tight text-[var(--brand-accent)]">
+        <h1 className="heading-gradient text-4xl font-bold tracking-tight">
           About Catchy
         </h1>
-        <p className="mt-4 max-w-3xl text-slate-600">
+        <p className="mt-4 max-w-3xl text-gray-600">
           Our mission is simple: help strong businesses become trusted online
           brands through clear, evidence-based storytelling.
         </p>
-        <p className="mt-3 max-w-3xl text-slate-600">
+        <p className="mt-3 max-w-3xl text-gray-600">
           Catchy stands for consistent growth, honest communication, and trust
           that can be verified.
         </p>
@@ -27,7 +27,7 @@ export default function AboutPage() {
           href={brandConfig.links.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex text-sm font-semibold text-[var(--brand-accent)] hover:text-[var(--brand-accent-strong)]"
+          className="mt-4 inline-flex text-sm font-semibold text-slate-900 hover:text-[var(--accent-link)]"
         >
           Follow @catchy_is_growth on Instagram
         </Link>
@@ -51,16 +51,16 @@ export default function AboutPage() {
             key={title}
             className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100"
           >
-            <h2 className="text-xl font-semibold text-[var(--brand-accent)]">
+            <h2 className="heading-gradient text-xl font-semibold">
               {title}
             </h2>
-            <p className="mt-2 text-sm text-slate-600">{copy}</p>
+            <p className="mt-2 text-sm text-gray-600">{copy}</p>
           </article>
         ))}
       </section>
       <section className="grid gap-4 md:grid-cols-2">
         <article className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100">
-          <h2 className="text-2xl font-bold tracking-tight text-[var(--brand-accent)]">
+          <h2 className="heading-gradient text-2xl font-bold tracking-tight">
             Founder
           </h2>
           <Image
@@ -70,13 +70,13 @@ export default function AboutPage() {
             height={360}
             className="mt-4 rounded-2xl"
           />
-          <p className="mt-3 text-sm text-slate-600">
+          <p className="mt-3 text-sm text-gray-600">
             Founder bio placeholder. Add your founder story and credentials
             here.
           </p>
         </article>
         <article className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100">
-          <h2 className="text-2xl font-bold tracking-tight text-[var(--brand-accent)]">
+          <h2 className="heading-gradient text-2xl font-bold tracking-tight">
             Team Photos
           </h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -95,7 +95,7 @@ export default function AboutPage() {
               className="rounded-2xl"
             />
           </div>
-          <p className="mt-3 text-sm text-slate-600">
+          <p className="mt-3 text-sm text-gray-600">
             Replace placeholders with real team and behind-the-scenes shots.
           </p>
         </article>

@@ -7,24 +7,24 @@ export function SiteFooter() {
     <footer className="mt-20 border-t border-slate-100 bg-white">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Catchy</h2>
-          <p className="mt-3 text-sm text-slate-600">
+          <h2 className="heading-gradient text-lg font-semibold">Catchy</h2>
+          <p className="mt-3 text-sm text-gray-600">
             Helping businesses grow their online presence through
             credibility-first storytelling.
           </p>
         </div>
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
+          <h3 className="heading-gradient text-sm font-semibold uppercase tracking-wide">
             Socials
           </h3>
-          <div className="mt-3 flex items-center gap-3 text-slate-500">
+          <div className="mt-3 flex items-center gap-3 text-gray-500">
             <Link
               href={brandConfig.links.instagram}
               target="_blank"
               rel="noopener noreferrer"
               data-testid="footer-instagram-link"
               aria-label="Catchy on Instagram"
-              className="inline-flex rounded-full p-2 transition hover:scale-110 hover:text-[#D108F2] focus-visible:scale-110 focus-visible:text-[#D108F2]"
+              className="inline-flex rounded-full p-2 transition hover:scale-110 hover:text-[var(--accent-link)] focus-visible:scale-110 focus-visible:text-[var(--accent-link)]"
             >
               <InstagramIcon className="h-5 w-5" />
             </Link>
@@ -34,7 +34,7 @@ export function SiteFooter() {
               rel="noopener noreferrer"
               data-testid="footer-x-link"
               aria-label="Catchy on X"
-              className="inline-flex rounded-full p-2 transition hover:scale-110 hover:text-[#D108F2] focus-visible:scale-110 focus-visible:text-[#D108F2]"
+              className="inline-flex rounded-full p-2 transition hover:scale-110 hover:text-[var(--accent-link)] focus-visible:scale-110 focus-visible:text-[var(--accent-link)]"
             >
               <XIcon className="h-5 w-5" />
             </Link>
@@ -44,21 +44,21 @@ export function SiteFooter() {
               rel="noopener noreferrer"
               data-testid="footer-tiktok-link"
               aria-label="Catchy on TikTok"
-              className="inline-flex rounded-full p-2 transition hover:scale-110 hover:text-[#D108F2] focus-visible:scale-110 focus-visible:text-[#D108F2]"
+              className="inline-flex rounded-full p-2 transition hover:scale-110 hover:text-[var(--accent-link)] focus-visible:scale-110 focus-visible:text-[var(--accent-link)]"
             >
               <TikTokIcon className="h-5 w-5" />
             </Link>
           </div>
         </div>
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
+          <h3 className="heading-gradient text-sm font-semibold uppercase tracking-wide">
             Start Here
           </h3>
           <Link
             href={brandConfig.links.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex rounded-full bg-[var(--brand-accent)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-accent-strong)]"
+            className="mt-3 inline-flex h-10 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
           >
             Chat on WhatsApp
           </Link>

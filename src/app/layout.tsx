@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     template: "%s | Catchy",
   },
   description:
-    "Catchy helps businesses grow their online presence with trust-led campaigns, content, and FREE Catchy Verifs.",
+    "Catchy is a global growth agency delivering strategy, creative, performance marketing, and web execution, with Catchy Verification as a featured trust service.",
   openGraph: {
     title: "Catchy | Growth Marketing Agency",
     description:
-      "Grow your online presence with credibility-first storytelling and FREE Catchy Verifs.",
+      "Scale with a global growth agency for strategy, creative, performance, and web, featuring Catchy Verification for trust-led visibility.",
     url: "https://catchy-agency.example",
     siteName: "Catchy",
     images: [
@@ -54,12 +54,10 @@ export default function RootLayout({
         style={
           {
             "--site-bg": brandConfig.colors.background,
-            "--brand-accent": brandConfig.colors.primary,
-            "--brand-accent-strong": brandConfig.colors.secondary,
-            "--brand-accent-soft": brandConfig.colors.soft,
+            "--surface-subtle": brandConfig.colors.soft,
           } as CSSProperties
         }
-        className={`${bodyFont.variable} ${headingFont.variable} bg-[var(--site-bg)] text-slate-900 antialiased`}
+        className={`${bodyFont.variable} ${headingFont.variable} bg-[var(--site-bg)] text-[var(--text-primary)] antialiased`}
       >
         <SiteHeader />
         <main>{children}</main>

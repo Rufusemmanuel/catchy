@@ -6,7 +6,9 @@ const CONSULTATION_FORM_URL =
 test("Home loads with header and navigation", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("banner")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Services" })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Services", exact: true })
+  ).toBeVisible();
 });
 
 test("Mobile header shows primary CTA + hamburger and menu content", async ({
@@ -25,7 +27,7 @@ test("Mobile header shows primary CTA + hamburger and menu content", async ({
   await expect(header.getByRole("link", { name: "Services" })).toHaveCount(0);
 
   const applyCta = header.getByRole("link", {
-    name: "Apply for a Free Catchy Verif",
+    name: "Apply for Catchy Verification",
   });
   await expect(applyCta).toHaveCount(1);
   await expect(applyCta).toBeVisible();
@@ -40,23 +42,30 @@ test("Mobile header shows primary CTA + hamburger and menu content", async ({
   await context.close();
 });
 
-test("Apply for a Free Catchy Verif CTA reaches catchy-verifs page", async ({
+test("Apply for Catchy Verification CTA reaches catchy-verification page", async ({
   page,
 }) => {
   await page.goto("/");
   await page
-    .getByRole("link", { name: "Apply for a Free Catchy Verif" })
+    .getByRole("link", { name: "Apply for Catchy Verification" })
     .first()
     .click();
-  await expect(page).toHaveURL(/\/catchy-verifs/);
+  await expect(page).toHaveURL(/\/catchy-verification/);
 });
 
-test("Catchy Verifs page has form link or embed", async ({ page }) => {
-  await page.goto("/catchy-verifs");
+test("Catchy Verification page has form link or embed", async ({ page }) => {
+  await page.goto("/catchy-verification");
   const formTarget = page.locator(
-    '[data-testid="google-form-link"], iframe[title="Catchy Verifs application form"]'
+    '[data-testid="google-form-link"], iframe[title="Catchy Verification application form"]'
   );
   await expect(formTarget.first()).toBeVisible();
+});
+
+test("Legacy catchy-verifs slug redirects to catchy-verification", async ({
+  page,
+}) => {
+  await page.goto("/catchy-verifs");
+  await expect(page).toHaveURL(/\/catchy-verification/);
 });
 
 test("Book a Consultation points to Google Form", async ({ page }) => {

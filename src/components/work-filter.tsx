@@ -5,12 +5,12 @@ import { useMemo, useState } from "react";
 
 type Item = {
   title: string;
-  category: "Verifs" | "Social" | "Design" | "Ads" | "Events";
+  category: "Verification" | "Social" | "Design" | "Ads" | "Events";
   summary: string;
 };
 
 const categories: Array<Item["category"]> = [
-  "Verifs",
+  "Verification",
   "Social",
   "Design",
   "Ads",
@@ -19,8 +19,8 @@ const categories: Array<Item["category"]> = [
 
 const items: Item[] = [
   {
-    title: "Family Restaurant Verif",
-    category: "Verifs",
+    title: "Family Restaurant Verification",
+    category: "Verification",
     summary: "On-site trust video covering sourcing and hygiene checks.",
   },
   {
@@ -44,14 +44,14 @@ const items: Item[] = [
     summary: "Paid social campaigns with weekly optimization.",
   },
   {
-    title: "Workshop Verif Story",
-    category: "Verifs",
+    title: "Workshop Verification Story",
+    category: "Verification",
     summary: "Process-led feature explaining quality controls.",
   },
 ];
 
 export function WorkFilter() {
-  const [active, setActive] = useState<Item["category"]>("Verifs");
+  const [active, setActive] = useState<Item["category"]>("Verification");
 
   const filtered = useMemo(
     () => items.filter((item) => item.category === active),
@@ -68,8 +68,8 @@ export function WorkFilter() {
             onClick={() => setActive(category)}
             className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
               active === category
-                ? "bg-[var(--brand-accent)] text-white"
-                : "bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-50"
+                ? "bg-black text-white"
+                : "bg-white text-gray-600 ring-1 ring-slate-200 hover:bg-slate-50"
             }`}
           >
             {category}
@@ -89,13 +89,13 @@ export function WorkFilter() {
               height={340}
               className="h-40 w-full rounded-xl object-cover"
             />
-            <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
               {item.category}
             </p>
-            <h3 className="mt-2 text-lg font-semibold text-slate-900">
+            <h3 className="heading-gradient mt-2 text-lg font-semibold">
               {item.title}
             </h3>
-            <p className="mt-2 text-sm text-slate-600">{item.summary}</p>
+            <p className="mt-2 text-sm text-gray-600">{item.summary}</p>
           </article>
         ))}
       </div>

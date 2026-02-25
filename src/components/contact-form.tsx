@@ -61,7 +61,7 @@ export function ContactForm() {
         className="space-y-4 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100"
       >
         <div>
-          <label htmlFor="name" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-600">
             Name *
           </label>
           <input
@@ -76,7 +76,7 @@ export function ContactForm() {
           {errors.name ? <p className="mt-1 text-xs text-red-600">{errors.name}</p> : null}
         </div>
         <div>
-          <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-600">
             Email *
           </label>
           <input
@@ -96,7 +96,7 @@ export function ContactForm() {
         <div>
           <label
             htmlFor="business"
-            className="mb-1 block text-sm font-medium text-slate-700"
+            className="mb-1 block text-sm font-medium text-gray-600"
           >
             Business
           </label>
@@ -113,7 +113,7 @@ export function ContactForm() {
         <div>
           <label
             htmlFor="message"
-            className="mb-1 block text-sm font-medium text-slate-700"
+            className="mb-1 block text-sm font-medium text-gray-600"
           >
             Message *
           </label>
@@ -133,7 +133,7 @@ export function ContactForm() {
         </div>
         <button
           type="submit"
-          className="inline-flex rounded-full bg-[var(--brand-accent)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-accent-strong)]"
+          className="inline-flex h-10 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
         >
           Send Message
         </button>

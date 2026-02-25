@@ -12,9 +12,9 @@ type CtaButtonProps = {
 
 const toneClasses: Record<"primary" | "secondary", string> = {
   primary:
-    "bg-[var(--brand-accent)] text-white hover:bg-[var(--brand-accent-strong)]",
+    "border border-transparent bg-[var(--button-primary)] text-white hover:bg-[var(--button-primary-hover)]",
   secondary:
-    "bg-white text-[var(--brand-accent)] ring-1 ring-[var(--brand-accent)]/25 hover:bg-[var(--brand-accent-soft)]",
+    "border border-[var(--button-primary)] bg-white text-[var(--button-primary)] hover:bg-[#7C3AED]/10 active:bg-[#7C3AED]/15",
 };
 
 export function CtaButton({
@@ -25,7 +25,7 @@ export function CtaButton({
   className = "",
 }: CtaButtonProps) {
   const tone = variant === "consultation" ? consultationStyle : variant;
-  const classes = `inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition ${toneClasses[tone]} ${className}`;
+  const classes = `inline-flex h-10 items-center justify-center rounded-xl px-6 text-sm font-semibold shadow-sm transition-colors hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30 ${toneClasses[tone]} ${className}`;
 
   if (variant === "consultation") {
     return (
