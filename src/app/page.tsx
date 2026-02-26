@@ -8,7 +8,7 @@ export default function HomePage() {
       <section className="reveal-up grid gap-6 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-100 sm:p-6 md:grid-cols-2 md:p-12">
         <div>
           <p className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-gray-600">
-            Global Growth Agency
+            GLOBAL GROWTH AND MARKETING AGENCY
           </p>
           <h1 className="mt-4 max-w-3xl text-3xl font-bold tracking-tight text-gray-900 [text-wrap:balance] sm:text-4xl md:text-5xl">
             Catchy builds global growth systems for brands ready to scale.

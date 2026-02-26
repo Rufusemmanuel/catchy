@@ -1,7 +1,7 @@
 export const brandConfig = {
   name: "Catchy",
   consultationFormUrl:
-    "https://docs.google.com/forms/d/e/1FAIpQLSdtpBZZwqVZaVVfXAB8q7rQyS_REfPDDbEsTO_Qy2_Ue2xJnQ/viewform",
+    "https://docs.google.com/forms/d/e/1FAIpQLSdtpBZZwqVZaVVfXAB8q7rQyS_REfPDDbEsTO_Qy2_Ue2xJnQ/viewform?usp=send_form",
   colors: {
     primary: "#7C3AED",
     secondary: "#A855F7",
