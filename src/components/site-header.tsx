@@ -49,7 +49,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-base font-medium text-gray-600 transition hover:text-slate-900"
+              className="text-base font-medium text-slate-700 transition hover:text-slate-950"
             >
               {item.label}
             </Link>
@@ -139,7 +139,7 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   onClick={closeMobileMenu}
-                  className="rounded-xl px-3 py-2 text-base font-medium text-gray-600 transition hover:bg-slate-50"
+                  className="rounded-xl px-3 py-2 text-base font-medium text-slate-700 transition hover:bg-slate-50 hover:text-slate-950"
                 >
                   {item.label}
                 </Link>

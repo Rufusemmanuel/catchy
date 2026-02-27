@@ -4,21 +4,21 @@ import { brandConfig, services } from "@/config/brand";
 
 export default function HomePage() {
   return (
-    <div className="mx-auto max-w-6xl space-y-16 px-4 pb-16 pt-10 md:px-6 md:pt-12 lg:px-8">
-      <section className="reveal-up grid gap-6 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-100 sm:p-6 md:grid-cols-2 md:p-12">
+    <div className="mx-auto max-w-6xl space-y-[4.5rem] px-4 pb-16 pt-10 md:px-6 md:pt-12 lg:px-8">
+      <section className="reveal-up grid gap-7 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-100 sm:p-6 md:grid-cols-2 md:p-12">
         <div>
-          <p className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold uppercase tracking-[0.2em] text-gray-600">
+          <p className="inline-flex rounded-full bg-slate-100 px-2.5 py-0.5 text-sm font-semibold uppercase tracking-[0.22em] text-gray-600">
             GLOBAL GROWTH AND MARKETING AGENCY
           </p>
-          <h1 className="mt-4 max-w-3xl text-3xl font-bold tracking-tight text-gray-900 [text-wrap:balance] sm:text-4xl md:text-5xl">
+          <h1 className="mt-4 max-w-3xl text-3xl font-extrabold leading-tight tracking-tight text-gray-900 [text-wrap:balance] sm:text-4xl md:text-5xl md:leading-[1.08]">
             Catchy builds global growth systems for brands ready to scale.
           </h1>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-gray-600">
+          <p className="mt-5 max-w-[68ch] text-lg leading-8 text-gray-600">
             We combine strategy, creative, performance marketing, and digital
             execution so your brand grows with clarity and consistency across
             markets.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
             <CtaButton href="/services" className="w-full justify-center whitespace-nowrap sm:w-auto">
               Explore Agency Services
             </CtaButton>
@@ -60,7 +60,7 @@ export default function HomePage() {
         ))}
       </section>
 
-      <section className="space-y-6">
+      <section className="space-y-7">
         <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
           Core agency capabilities
         </h2>
@@ -123,7 +123,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-5">
+      <section className="space-y-6">
         <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
           Recent Work
         </h2>
@@ -158,7 +158,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-5">
+      <section className="space-y-6">
         <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
           Testimonials
         </h2>

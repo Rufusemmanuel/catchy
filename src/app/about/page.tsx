@@ -92,7 +92,7 @@ export default function AboutPage() {
 
       <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <article className="flex h-full flex-col rounded-3xl bg-white p-7 shadow-sm ring-1 ring-slate-100 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-md md:p-8">
-          <h2 className="heading-gradient text-[1.7rem] font-semibold tracking-tight">
+          <h2 className="heading-gradient text-[1.7rem] font-bold tracking-tight">
             Founder
           </h2>
           <div className="mt-4 h-px bg-slate-100" />
@@ -124,7 +124,7 @@ export default function AboutPage() {
           </p>
         </article>
         <article className="flex h-full flex-col rounded-3xl bg-white p-7 shadow-sm ring-1 ring-slate-100 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-md md:p-8">
-          <h2 className="heading-gradient text-[1.7rem] font-semibold tracking-tight">
+          <h2 className="heading-gradient text-[1.7rem] font-bold tracking-tight">
             Co-Founders
           </h2>
           <div className="mt-4 h-px bg-slate-100" />
@@ -160,7 +160,7 @@ export default function AboutPage() {
           </div>
         </article>
         <article className="flex h-full flex-col rounded-3xl bg-white p-7 shadow-sm ring-1 ring-slate-100 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-md md:p-8">
-          <h2 className="heading-gradient text-[1.7rem] font-semibold tracking-tight">
+          <h2 className="heading-gradient text-[1.7rem] font-bold tracking-tight">
             Our Team
           </h2>
           <div className="mt-4 h-px bg-slate-100" />
