@@ -11,10 +11,24 @@
   --accent-link: #7c3aed;
 }
 
+html {
+  font-size: clamp(15px, 0.4vw + 14px, 18px);
+}
+
 body {
   font-family: var(--font-dm-sans), sans-serif;
   background: var(--site-bg);
   color: var(--text-primary);
+  line-height: 1.7;
+}
+
+p {
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+p:not([class*="max-w-"]) {
+  max-width: 70ch;
 }
 
 h1,

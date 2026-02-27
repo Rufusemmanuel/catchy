@@ -144,36 +144,36 @@ export default function ServicesPage() {
             key={service.title}
             className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100"
           >
-            <h2 className="heading-gradient text-2xl font-semibold">
+            <h2 className="heading-gradient text-2xl font-semibold sm:text-3xl">
               {service.title}
             </h2>
-            <p className="mt-3 text-sm text-gray-600">{service.description}</p>
+            <p className="mt-3 text-base leading-7 text-gray-600">{service.description}</p>
 
             {service.bullets ? (
-              <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-gray-600">
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-base leading-7 text-gray-600">
                 {service.bullets.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
             ) : null}
 
-            <h3 className="mt-4 text-sm font-semibold text-slate-900">
+            <h3 className="mt-4 text-xl font-semibold text-slate-900">
               {service.impactTitle}
             </h3>
             {service.impactBody ? (
-              <p className="mt-2 text-sm text-gray-600">{service.impactBody}</p>
+              <p className="mt-2 text-base leading-7 text-gray-600">{service.impactBody}</p>
             ) : null}
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-600">
+            <ul className="mt-2 list-disc space-y-1 pl-5 text-base leading-7 text-gray-600">
               {service.impactPoints.map((point) => (
                 <li key={point}>{point}</li>
               ))}
             </ul>
-            <p className="mt-3 text-sm text-gray-600">{service.closing}</p>
+            <p className="mt-3 text-base leading-7 text-gray-600">{service.closing}</p>
             <a
               href={service.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex h-10 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
+              className="mt-4 inline-flex h-11 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
             >
               {service.bookingLabel}
             </a>
@@ -182,14 +182,14 @@ export default function ServicesPage() {
       </section>
 
       <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100">
-        <h2 className="heading-gradient text-2xl font-bold tracking-tight">
+        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
           Why Catchy?
         </h2>
-        <p className="mt-3 text-sm text-gray-600">
+        <p className="mt-3 text-base leading-7 text-gray-600">
           Every service at Catchy is built around one goal: making your brand
           visible, credible, and impossible to ignore.
         </p>
-        <p className="mt-3 text-sm text-gray-600">
+        <p className="mt-3 text-base leading-7 text-gray-600">
           We do not just help businesses exist; we help them grow with
           structure, strategy, and trust.
         </p>

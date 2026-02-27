@@ -89,13 +89,13 @@ export function WorkFilter() {
               height={340}
               className="h-40 w-full rounded-xl object-cover"
             />
-            <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
+            <p className="mt-3 text-sm font-semibold uppercase tracking-wide text-gray-500">
               {item.category}
             </p>
-            <h3 className="heading-gradient mt-2 text-lg font-semibold">
+            <h3 className="heading-gradient mt-2 text-xl font-semibold">
               {item.title}
             </h3>
-            <p className="mt-2 text-sm text-gray-600">{item.summary}</p>
+            <p className="mt-2 text-base text-gray-600">{item.summary}</p>
           </article>
         ))}
       </div>

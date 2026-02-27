@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
           <h2 className="heading-gradient text-lg font-semibold">Catchy</h2>
-          <p className="mt-3 text-sm text-gray-600">
+          <p className="mt-3 text-base text-gray-600">
             Helping businesses grow their online presence through
             credibility-first storytelling.
           </p>
@@ -58,7 +58,7 @@ export function SiteFooter() {
             href={brandConfig.links.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex h-10 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
+            className="mt-3 inline-flex h-11 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
           >
             Chat on WhatsApp
           </Link>

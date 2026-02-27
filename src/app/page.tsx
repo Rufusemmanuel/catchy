@@ -7,13 +7,13 @@ export default function HomePage() {
     <div className="mx-auto max-w-6xl space-y-16 px-4 pb-16 pt-10 md:px-6 md:pt-12 lg:px-8">
       <section className="reveal-up grid gap-6 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-100 sm:p-6 md:grid-cols-2 md:p-12">
         <div>
-          <p className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-gray-600">
+          <p className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold uppercase tracking-[0.2em] text-gray-600">
             GLOBAL GROWTH AND MARKETING AGENCY
           </p>
           <h1 className="mt-4 max-w-3xl text-3xl font-bold tracking-tight text-gray-900 [text-wrap:balance] sm:text-4xl md:text-5xl">
             Catchy builds global growth systems for brands ready to scale.
           </h1>
-          <p className="mt-5 max-w-2xl text-lg text-gray-600">
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-gray-600">
             We combine strategy, creative, performance marketing, and digital
             execution so your brand grows with clarity and consistency across
             markets.
@@ -40,7 +40,7 @@ export default function HomePage() {
               className="object-cover"
             />
           </div>
-          <p className="mt-3 text-sm font-medium text-gray-600">
+          <p className="mt-3 text-base font-medium text-gray-600">
             Featured service: Catchy Verification helps businesses turn trust
             signals into customer confidence.
           </p>
@@ -55,13 +55,13 @@ export default function HomePage() {
         ].map(([value, label]) => (
           <div key={label} className="rounded-2xl bg-slate-50 p-4">
             <p className="text-2xl font-bold text-slate-900">{value}</p>
-            <p className="text-sm text-gray-600">{label}</p>
+            <p className="text-base text-gray-600">{label}</p>
           </div>
         ))}
       </section>
 
       <section className="space-y-6">
-        <h2 className="heading-gradient text-3xl font-bold tracking-tight">
+        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
           Core agency capabilities
         </h2>
         <div className="grid gap-4 md:grid-cols-3">
@@ -70,18 +70,18 @@ export default function HomePage() {
               key={service.name}
               className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100"
             >
-              <h3 className="heading-gradient text-lg font-semibold">{service.name}</h3>
-              <p className="mt-2 text-sm text-gray-600">{service.description}</p>
+              <h3 className="heading-gradient text-xl font-semibold">{service.name}</h3>
+              <p className="mt-2 text-base text-gray-600">{service.description}</p>
             </article>
           ))}
         </div>
       </section>
 
       <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-        <p className="inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-gray-600">
+        <p className="inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-sm font-semibold text-gray-600">
           Featured Service
         </p>
-        <h2 className="heading-gradient mt-3 text-3xl font-bold tracking-tight">
+        <h2 className="heading-gradient mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
           Catchy Verification
         </h2>
         <p className="mt-3 max-w-3xl text-gray-600">
@@ -112,7 +112,7 @@ export default function HomePage() {
                 Step {step}
               </p>
               <h3 className="heading-gradient mt-2 text-xl font-semibold">{title}</h3>
-              <p className="mt-2 text-sm text-gray-600">{text}</p>
+              <p className="mt-2 text-base text-gray-600">{text}</p>
             </article>
           ))}
         </div>
@@ -124,7 +124,7 @@ export default function HomePage() {
       </section>
 
       <section className="space-y-5">
-        <h2 className="heading-gradient text-3xl font-bold tracking-tight">
+        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
           Recent Work
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -148,8 +148,8 @@ export default function HomePage() {
                 className="h-40 w-full object-cover"
               />
               <div className="p-4">
-                <h3 className="heading-gradient font-semibold">{item}</h3>
-                <p className="mt-1 text-sm text-gray-600">
+                <h3 className="heading-gradient text-xl font-semibold">{item}</h3>
+                <p className="mt-1 text-base text-gray-600">
                   Placeholder portfolio summary for this category.
                 </p>
               </div>
@@ -159,7 +159,7 @@ export default function HomePage() {
       </section>
 
       <section className="space-y-5">
-        <h2 className="heading-gradient text-3xl font-bold tracking-tight">
+        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
           Testimonials
         </h2>
         <div className="grid gap-4 md:grid-cols-3">
@@ -172,8 +172,8 @@ export default function HomePage() {
               key={quote}
               className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-100"
             >
-              <p className="text-sm text-gray-600">{`"${quote}"`}</p>
-              <footer className="mt-3 text-xs text-gray-500">
+              <p className="text-base text-gray-600">{`"${quote}"`}</p>
+              <footer className="mt-3 text-sm text-gray-500">
                 Client #{idx + 1} placeholder
               </footer>
             </blockquote>
@@ -182,7 +182,7 @@ export default function HomePage() {
       </section>
 
       <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-        <h2 className="heading-gradient text-3xl font-bold tracking-tight">
+        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
           Instagram Preview
         </h2>
         <p className="mt-2 text-gray-600">
@@ -201,8 +201,8 @@ export default function HomePage() {
           {["Post placeholder", "Reel placeholder", "Story highlight placeholder"].map(
             (item) => (
               <div key={item} className="rounded-2xl bg-slate-50 p-5">
-                <p className="text-sm text-gray-600">{item}</p>
-                <p className="mt-2 text-xs text-gray-500">
+                <p className="text-base text-gray-600">{item}</p>
+                <p className="mt-2 text-sm text-gray-500">
                   Embed-ready block placeholder.
                 </p>
               </div>
@@ -213,7 +213,7 @@ export default function HomePage() {
 
       <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200 md:flex md:items-center md:justify-between">
         <div>
-          <h2 className="heading-gradient text-3xl font-bold tracking-tight">
+          <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
             Need verification? Apply in minutes.
           </h2>
           <p className="mt-2 text-gray-600">

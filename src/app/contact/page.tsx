@@ -25,7 +25,7 @@ export default function ContactPage() {
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <ContactForm />
         <aside className="space-y-4 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100">
-          <h2 className="heading-gradient text-xl font-semibold">
+          <h2 className="heading-gradient text-2xl font-semibold sm:text-3xl">
             Direct channels
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -33,7 +33,7 @@ export default function ContactPage() {
               href={brandConfig.links.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-10 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
+              className="inline-flex h-11 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
             >
               WhatsApp (Placeholder)
             </Link>
@@ -41,12 +41,12 @@ export default function ContactPage() {
               href={brandConfig.links.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-10 items-center justify-center rounded-xl border border-[var(--button-primary)] bg-white px-6 text-sm font-semibold text-[var(--button-primary)] shadow-sm transition-colors hover:bg-[#7C3AED]/10 hover:shadow-md active:bg-[#7C3AED]/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
+              className="inline-flex h-11 items-center justify-center rounded-xl border border-[var(--button-primary)] bg-white px-6 text-base font-semibold text-[var(--button-primary)] shadow-sm transition-colors hover:bg-[#7C3AED]/10 hover:shadow-md active:bg-[#7C3AED]/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
             >
               Instagram
             </Link>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-base text-gray-600">
             Email:{" "}
             <a
               href="mailto:hello@catchy.example"

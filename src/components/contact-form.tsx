@@ -50,7 +50,7 @@ export function ContactForm() {
       {showToast ? (
         <p
           role="status"
-          className="rounded-xl bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700"
+          className="rounded-xl bg-emerald-50 px-4 py-3 text-base font-medium text-emerald-700"
         >
           Thanks, your message has been sent. We will reply shortly.
         </p>
@@ -71,9 +71,9 @@ export function ContactForm() {
             onChange={(event) =>
               setValues((prev) => ({ ...prev, name: event.target.value }))
             }
-            className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
           />
-          {errors.name ? <p className="mt-1 text-xs text-red-600">{errors.name}</p> : null}
+          {errors.name ? <p className="mt-1 text-sm text-red-600">{errors.name}</p> : null}
         </div>
         <div>
           <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-600">
@@ -87,10 +87,10 @@ export function ContactForm() {
             onChange={(event) =>
               setValues((prev) => ({ ...prev, email: event.target.value }))
             }
-            className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
           />
           {errors.email ? (
-            <p className="mt-1 text-xs text-red-600">{errors.email}</p>
+            <p className="mt-1 text-sm text-red-600">{errors.email}</p>
           ) : null}
         </div>
         <div>
@@ -107,7 +107,7 @@ export function ContactForm() {
             onChange={(event) =>
               setValues((prev) => ({ ...prev, business: event.target.value }))
             }
-            className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
           />
         </div>
         <div>
@@ -125,15 +125,15 @@ export function ContactForm() {
             onChange={(event) =>
               setValues((prev) => ({ ...prev, message: event.target.value }))
             }
-            className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
           />
           {errors.message ? (
-            <p className="mt-1 text-xs text-red-600">{errors.message}</p>
+            <p className="mt-1 text-sm text-red-600">{errors.message}</p>
           ) : null}
         </div>
         <button
           type="submit"
-          className="inline-flex h-10 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
+          className="inline-flex h-11 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
         >
           Send Message
         </button>

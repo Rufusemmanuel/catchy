@@ -25,7 +25,7 @@ export function CtaButton({
   className = "",
 }: CtaButtonProps) {
   const tone = variant === "consultation" ? consultationStyle : variant;
-  const classes = `inline-flex h-10 items-center justify-center rounded-xl px-6 text-sm font-semibold shadow-sm transition-colors hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30 ${toneClasses[tone]} ${className}`;
+  const classes = `inline-flex h-11 items-center justify-center rounded-xl px-6 text-base font-semibold shadow-sm transition-colors hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30 ${toneClasses[tone]} ${className}`;
 
   if (variant === "consultation") {
     return (

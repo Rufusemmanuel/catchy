@@ -33,7 +33,7 @@ export default function CatchyVerificationPage() {
           <h1 className="heading-gradient mt-3 text-4xl font-bold tracking-tight">
             Catchy Verification
           </h1>
-          <p className="mt-4 text-gray-600">
+          <p className="mt-4 text-base leading-7 text-gray-600">
             Catchy Verification helps businesses present clear trust evidence
             through verification-focused storytelling and structured brand
             credibility assets.
@@ -51,8 +51,8 @@ export default function CatchyVerificationPage() {
       </section>
 
       <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-        <h2 className="heading-gradient text-2xl font-bold tracking-tight">Why it works</h2>
-        <p className="mt-3 text-gray-600">
+        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">Why it works</h2>
+        <p className="mt-3 text-base leading-7 text-gray-600">
           Trust grows when customers can see proof. Catchy Verification closes
           the credibility gap by turning your real operations into clear,
           confidence-building communication.
@@ -60,8 +60,8 @@ export default function CatchyVerificationPage() {
       </section>
 
       <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-        <h2 className="heading-gradient text-2xl font-bold tracking-tight">What we verify</h2>
-        <ul className="mt-4 grid gap-3 text-sm text-gray-600 sm:grid-cols-2">
+        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">What we verify</h2>
+        <ul className="mt-4 grid gap-3 text-base leading-7 text-gray-600 sm:grid-cols-2">
           {[
             "Business identity and positioning",
             "Operational credibility signals",
@@ -78,8 +78,8 @@ export default function CatchyVerificationPage() {
       </section>
 
       <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-        <h2 className="heading-gradient text-2xl font-bold tracking-tight">What&apos;s included</h2>
-        <ul className="mt-4 grid gap-3 text-sm text-gray-600 sm:grid-cols-2">
+        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">What&apos;s included</h2>
+        <ul className="mt-4 grid gap-3 text-base leading-7 text-gray-600 sm:grid-cols-2">
           {[
             "Verification intake review",
             "Trust criteria assessment",
@@ -99,10 +99,10 @@ export default function CatchyVerificationPage() {
         id="apply"
         className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100"
       >
-        <h2 className="heading-gradient text-2xl font-bold tracking-tight">
+        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
           Apply for Catchy Verification
         </h2>
-        <p className="mt-3 text-gray-600">
+        <p className="mt-3 text-base leading-7 text-gray-600">
           Apply through the embedded form. If the embed has issues, use the
           direct link to open the form in a new tab.
         </p>
@@ -120,15 +120,15 @@ export default function CatchyVerificationPage() {
           href={GOOGLE_FORM_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 inline-flex h-10 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
+          className="mt-6 inline-flex h-11 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
         >
           Open form in new tab
         </a>
       </section>
 
       <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-        <h2 className="heading-gradient text-2xl font-bold tracking-tight">FAQ</h2>
-        <div className="mt-4 space-y-3 text-sm text-gray-600">
+        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">FAQ</h2>
+        <div className="mt-4 space-y-3 text-base leading-7 text-gray-600">
           <p>
             <span className="font-semibold">Is selection guaranteed?</span> No.
             Selection is based on fit and available monthly capacity.

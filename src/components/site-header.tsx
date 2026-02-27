@@ -49,7 +49,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-gray-600 transition hover:text-slate-900"
+              className="text-base font-medium text-gray-600 transition hover:text-slate-900"
             >
               {item.label}
             </Link>
@@ -80,7 +80,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2 md:hidden">
           <CtaButton
             href="/catchy-verification"
-            className="max-w-[220px] px-3 py-2 text-xs whitespace-nowrap"
+            className="max-w-[220px] px-3 py-2 text-sm whitespace-nowrap"
           >
             Apply for Catchy Verification
           </CtaButton>
@@ -139,7 +139,7 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   onClick={closeMobileMenu}
-                  className="rounded-xl px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-slate-50"
+                  className="rounded-xl px-3 py-2 text-base font-medium text-gray-600 transition hover:bg-slate-50"
                 >
                   {item.label}
                 </Link>
@@ -151,7 +151,7 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMobileMenu}
-              className="mt-4 inline-flex h-10 w-full items-center justify-center rounded-xl border border-[var(--button-primary)] bg-white px-6 text-sm font-semibold text-[var(--button-primary)] shadow-sm transition-colors hover:bg-[#7C3AED]/10 hover:shadow-md active:bg-[#7C3AED]/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30 whitespace-nowrap"
+              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-xl border border-[var(--button-primary)] bg-white px-6 text-base font-semibold text-[var(--button-primary)] shadow-sm transition-colors hover:bg-[#7C3AED]/10 hover:shadow-md active:bg-[#7C3AED]/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30 whitespace-nowrap"
             >
               Book a Consultation
             </a>
