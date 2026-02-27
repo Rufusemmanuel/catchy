@@ -2,6 +2,57 @@ import Image from "next/image";
 import { CtaButton } from "@/components/cta-button";
 import { brandConfig, services } from "@/config/brand";
 
+const testimonials = [
+  {
+    quote:
+      "I’ve worked with different media teams before, but Catchy handled our event announcement differently. The way they packaged it made the event look bigger and more organised. We saw more turnout than usual, and people kept referring to the announcement video. It definitely helped our brand visibility.",
+    role: "Event Director",
+    name: "Tomi Adebayo",
+    avatar: "/testimonials/t1.png",
+    alt: "Professional portrait of Tomi Adebayo, Event Director",
+  },
+  {
+    quote:
+      "When we first spoke, I just needed direction. The consultation was practical. They pointed out gaps in our positioning and helped us clean it up. Since then, inquiries have been more intentional. That clarity alone was worth it.",
+    role: "Startup Founder",
+    name: "Zainab Musa",
+    avatar: "/testimonials/t2.png",
+    alt: "Professional portrait of Zainab Musa, Startup Founder",
+  },
+  {
+    quote:
+      "We were running ads before, but nothing consistent. Catchy came in, adjusted the creatives and targeting, and within a few weeks we started seeing stronger leads. It wasn’t hype just solid strategy and execution.",
+    role: "Business Owner",
+    name: "Omar Al-Khatib",
+    avatar: "/testimonials/t3.png",
+    alt: "Professional portrait of Omar Al-Khatib, Business Owner",
+  },
+  {
+    quote:
+      "What I appreciated most was how they tightened our brand message. Our content finally felt cohesive. Customers started engaging more, and our store conversions improved shortly after.",
+    role: "Retail Brand Owner",
+    name: "Chloe Harrison",
+    avatar: "/testimonials/t4.png",
+    alt: "Professional portrait of Chloe Harrison, Retail Brand Owner",
+  },
+  {
+    quote:
+      "Our social media used to be inconsistent. Catchy helped us structure it properly and maintain a steady presence. It now reflects the standard of work we actually deliver offline.",
+    role: "Service Provider",
+    name: "David Okoye",
+    avatar: "/testimonials/t5.png",
+    alt: "Professional portrait of David Okoye, Service Provider",
+  },
+  {
+    quote:
+      "The event promotion was handled professionally from start to finish. The rollout built proper anticipation, and ticket sales moved faster than previous years. It felt organised and well thought through.",
+    role: "Event Organiser",
+    name: "James Whitaker",
+    avatar: "/testimonials/t6.png",
+    alt: "Professional portrait of James Whitaker, Event Organiser",
+  },
+];
+
 export default function HomePage() {
   return (
     <div className="mx-auto max-w-6xl space-y-[4.5rem] px-4 pb-16 pt-10 md:px-6 md:pt-12 lg:px-8">
@@ -162,21 +213,39 @@ export default function HomePage() {
         <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
           Testimonials
         </h2>
-        <div className="grid gap-4 md:grid-cols-3">
-          {[
-            "Catchy gave us a clear growth roadmap and a team that executes fast.",
-            "Our acquisition pipeline improved after the creative and media reset.",
-            "Catchy Verification helped close trust gaps with new customers.",
-          ].map((quote, idx) => (
-            <blockquote
-              key={quote}
-              className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-100"
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {testimonials.map((item, idx) => (
+            <article
+              key={item.name}
+              className="reveal-on-scroll group flex h-full flex-col rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+              style={{ animationDelay: `${idx * 80}ms` }}
             >
-              <p className="text-base text-gray-600">{`"${quote}"`}</p>
-              <footer className="mt-3 text-sm text-gray-500">
-                Client #{idx + 1} placeholder
-              </footer>
-            </blockquote>
+              <div className="relative h-[72px] w-[72px] overflow-hidden rounded-full ring-2 ring-purple-200 shadow-sm sm:h-[88px] sm:w-[88px]">
+                <Image
+                  src={item.avatar}
+                  alt={item.alt}
+                  fill
+                  sizes="(min-width: 640px) 88px, 72px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="mt-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#7C3AED]/10 text-[#7C3AED]">
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4">
+                  <path
+                    fill="currentColor"
+                    d="M9.7 11.5c0 3.6-1.9 6.1-5.6 7.4l-1-1.9c2.1-.9 3.2-2 3.5-3.6H3.8V6.8h5.9v4.7Zm10.6 0c0 3.6-1.9 6.1-5.6 7.4l-1-1.9c2.1-.9 3.2-2 3.5-3.6H14.4V6.8h5.9v4.7Z"
+                  />
+                </svg>
+              </div>
+              <blockquote className="mt-3 max-w-[62ch] text-base leading-7 text-gray-600">
+                {item.quote}
+              </blockquote>
+              <div className="mt-5 h-px w-full bg-slate-200" />
+              <p className="mt-4 text-base font-semibold text-slate-900">{item.name}</p>
+              <p className="text-sm font-medium tracking-[0.02em] text-slate-500">
+                {item.role}
+              </p>
+            </article>
           ))}
         </div>
       </section>
