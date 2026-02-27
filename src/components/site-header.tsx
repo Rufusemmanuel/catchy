@@ -9,7 +9,7 @@ import { brandConfig } from "@/config/brand";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/catchy-verification", label: "Catchy Verification" },
+  { href: "/catchy-verification", label: "Verification" },
   { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -44,12 +44,12 @@ export function SiteHeader() {
         >
           Catchy
         </Link>
-        <nav aria-label="Primary" className="hidden items-center gap-5 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-4 md:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-base font-medium text-slate-700 transition hover:text-slate-950"
+              className="whitespace-nowrap text-base font-medium text-slate-700 transition hover:text-slate-950"
             >
               {item.label}
             </Link>
@@ -139,7 +139,7 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   onClick={closeMobileMenu}
-                  className="rounded-xl px-3 py-2 text-base font-medium text-slate-700 transition hover:bg-slate-50 hover:text-slate-950"
+                  className="whitespace-nowrap rounded-xl px-3 py-2 text-base font-medium text-slate-700 transition hover:bg-slate-50 hover:text-slate-950"
                 >
                   {item.label}
                 </Link>
