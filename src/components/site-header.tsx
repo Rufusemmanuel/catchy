@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { CtaButton } from "@/components/cta-button";
 import { InstagramIcon, TikTokIcon, XIcon } from "@/components/icons";
 import { brandConfig } from "@/config/brand";
@@ -40,9 +41,17 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="text-xl font-bold tracking-tight text-slate-900"
+          aria-label="Catchy home"
+          className="inline-flex shrink-0 items-center"
         >
-          Catchy
+          <Image
+            src="/logo.png"
+            alt="Catchy"
+            width={900}
+            height={283}
+            priority
+            className="h-[38px] w-auto object-contain sm:h-[42px]"
+          />
         </Link>
         <nav aria-label="Primary" className="hidden items-center gap-4 md:flex">
           {navItems.map((item) => (

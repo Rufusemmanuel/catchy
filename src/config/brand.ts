@@ -15,7 +15,8 @@ export const brandConfig = {
     tiktok: "https://www.tiktok.com/@catchy_is_growth",
     googleForm:
       "https://docs.google.com/forms/d/e/1FAIpQLSckpsXtAGwJNRMtZBaj37QTWH91qx2W78ag3hulvgGO_AdFqA/viewform",
-    whatsapp: "https://wa.me/10000000000",
+    whatsapp:
+      "https://api.whatsapp.com/send/?phone=2349035789425&text&type=phone_number&app_absent=0",
   },
 } as const;
 
