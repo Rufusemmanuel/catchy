@@ -50,7 +50,7 @@ export function SiteHeader() {
             width={900}
             height={283}
             priority
-            className="h-[38px] w-auto object-contain sm:h-[42px]"
+            className="h-[38px] w-auto object-contain md:h-[42px]"
           />
         </Link>
         <nav aria-label="Primary" className="hidden items-center gap-4 md:flex">
