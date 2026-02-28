@@ -18,6 +18,9 @@ const headingFont = Sora({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://catchy-agency.example"),
+  icons: {
+    icon: "/favicon.ico",
+  },
   title: {
     default: "Catchy | Growth Marketing Agency",
     template: "%s | Catchy",
