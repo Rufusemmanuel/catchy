@@ -58,10 +58,10 @@ export function ContactForm() {
       <form
         noValidate
         onSubmit={handleSubmit}
-        className="space-y-4 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100"
+        className="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8"
       >
         <div>
-          <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-600">
+          <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-700">
             Name *
           </label>
           <input
@@ -71,12 +71,12 @@ export function ContactForm() {
             onChange={(event) =>
               setValues((prev) => ({ ...prev, name: event.target.value }))
             }
-            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
+            className="h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-900 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/30"
           />
           {errors.name ? <p className="mt-1 text-sm text-red-600">{errors.name}</p> : null}
         </div>
         <div>
-          <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-600">
+          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700">
             Email *
           </label>
           <input
@@ -87,7 +87,7 @@ export function ContactForm() {
             onChange={(event) =>
               setValues((prev) => ({ ...prev, email: event.target.value }))
             }
-            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
+            className="h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-900 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/30"
           />
           {errors.email ? (
             <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -96,7 +96,7 @@ export function ContactForm() {
         <div>
           <label
             htmlFor="business"
-            className="mb-1 block text-sm font-medium text-gray-600"
+            className="mb-1.5 block text-sm font-medium text-slate-700"
           >
             Business
           </label>
@@ -107,13 +107,13 @@ export function ContactForm() {
             onChange={(event) =>
               setValues((prev) => ({ ...prev, business: event.target.value }))
             }
-            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
+            className="h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-900 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/30"
           />
         </div>
         <div>
           <label
             htmlFor="message"
-            className="mb-1 block text-sm font-medium text-gray-600"
+            className="mb-1.5 block text-sm font-medium text-slate-700"
           >
             Message *
           </label>
@@ -125,7 +125,7 @@ export function ContactForm() {
             onChange={(event) =>
               setValues((prev) => ({ ...prev, message: event.target.value }))
             }
-            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
+            className="min-h-[140px] w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/30"
           />
           {errors.message ? (
             <p className="mt-1 text-sm text-red-600">{errors.message}</p>
@@ -133,7 +133,7 @@ export function ContactForm() {
         </div>
         <button
           type="submit"
-          className="inline-flex h-11 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
+          className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-purple-600 px-6 text-base font-medium text-white transition hover:bg-purple-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/30 sm:w-auto"
         >
           Send Message
         </button>

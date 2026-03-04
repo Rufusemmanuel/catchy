@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
-import { CtaButton } from "@/components/cta-button";
 import { brandConfig } from "@/config/brand";
 
 export const metadata: Metadata = {
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-6xl space-y-10 px-4 pb-16 pt-12 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl space-y-10 px-4 pb-24 pt-12 md:px-8">
       <section>
         <h1 className="heading-gradient text-4xl font-bold tracking-tight">
           Contact Catchy
@@ -22,46 +21,46 @@ export default function ContactPage() {
           right next step.
         </p>
       </section>
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <ContactForm />
-        <aside className="space-y-4 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100">
+        <aside className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
           <h2 className="heading-gradient text-2xl font-semibold sm:text-3xl">
             Direct channels
           </h2>
-          <div className="flex flex-wrap gap-2">
+          <p className="text-sm text-slate-600">Reach us faster via:</p>
+          <div className="flex flex-wrap gap-3">
             <Link
               href={brandConfig.links.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-transparent bg-[var(--button-primary)] px-6 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[var(--button-primary-hover)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
+              className="inline-flex h-11 items-center justify-center rounded-xl bg-purple-600 px-6 text-base font-medium text-white transition hover:bg-purple-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/30"
             >
-              WhatsApp (Placeholder)
+              WhatsApp
             </Link>
             <Link
               href={brandConfig.links.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-[var(--button-primary)] bg-white px-6 text-base font-semibold text-[var(--button-primary)] shadow-sm transition-colors hover:bg-[#7C3AED]/10 hover:shadow-md active:bg-[#7C3AED]/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-primary)]/30"
+              className="inline-flex h-11 items-center justify-center rounded-xl border border-purple-600 bg-white px-6 text-base font-medium text-purple-700 transition hover:bg-purple-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/30"
             >
               Instagram
             </Link>
           </div>
-          <p className="text-base text-gray-600">
-            Email:{" "}
+          <div className="inline-flex w-full items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
+            <span className="font-medium text-slate-700">Email</span>
             <a
               href="mailto:hello@catchy.example"
-              className="font-semibold text-slate-900"
+              className="font-semibold text-slate-900 hover:text-purple-700"
             >
               hello@catchy.example
             </a>
-          </p>
-          <CtaButton
-            href="/contact"
-            variant="consultation"
-            consultationStyle="secondary"
+          </div>
+          <Link
+            href="/book-call"
+            className="inline-flex h-11 items-center justify-center rounded-xl border border-purple-600 px-6 text-base font-medium text-purple-700 transition hover:bg-purple-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/30"
           >
             Book a Consultation
-          </CtaButton>
+          </Link>
         </aside>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CtaButton } from "@/components/cta-button";
+import { HeroVideo } from "@/components/hero-video";
 import { brandConfig, services } from "@/config/brand";
 
 const testimonials = [
@@ -84,12 +85,7 @@ export default function HomePage() {
         </div>
         <div className="overflow-hidden rounded-2xl bg-white p-3 ring-1 ring-slate-200">
           <div className="relative aspect-video overflow-hidden rounded-xl bg-white">
-            <Image
-              src="/placeholders/video-poster.svg"
-              alt="Catchy hero video preview placeholder"
-              fill
-              className="object-cover"
-            />
+            <HeroVideo />
           </div>
           <p className="mt-3 text-base font-medium text-gray-600">
             Featured service: Catchy Verification helps businesses turn trust
