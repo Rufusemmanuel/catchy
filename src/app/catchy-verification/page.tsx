@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CtaButton } from "@/components/cta-button";
+import { HeroVideo } from "@/components/hero-video";
 import { brandConfig } from "@/config/brand";
 
 const GOOGLE_FORM_URL = brandConfig.links.googleForm;
@@ -42,11 +43,8 @@ export default function CatchyVerificationPage() {
             <CtaButton href="#apply">Apply for Catchy Verification</CtaButton>
           </div>
         </div>
-        <div className="overflow-hidden rounded-2xl bg-slate-100">
-          <div
-            className="relative aspect-video w-full bg-[url('/placeholders/video-poster.svg')] bg-cover bg-center"
-            aria-label="Catchy Verification preview placeholder"
-          />
+        <div className="aspect-video overflow-hidden rounded-2xl bg-slate-100">
+          <HeroVideo />
         </div>
       </section>
 
