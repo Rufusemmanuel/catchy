@@ -168,11 +168,12 @@ export default function AboutPage() {
       <section className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <TeamMemberCard
           heading="Founder"
-          imageSrc="/images/founder.jpg"
+          imageSrc="/images/founder-emmanuella.jpg"
           imageAlt="Founder - Rufus Emmanuella"
           tag="Founder"
           name="Rufus Emmanuella"
           title="Founder / Growth & Strategy"
+          imagePositionClass="object-center"
           description="Catchy was founded by Rufus Emmanuella, a growth-focused marketing strategist with a strong foundation in communication, branding, and structured business development. Her mission is to help brands scale through trust, structure, and sustainable visibility."
         />
         <TeamMemberCard
