@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { InstagramIcon, TikTokIcon, XIcon } from "@/components/icons";
+import { FacebookIcon, LinkedInIcon, XIcon } from "@/components/icons";
 import { brandConfig } from "@/config/brand";
 
 export function SiteFooter() {
@@ -19,34 +19,34 @@ export function SiteFooter() {
           </h3>
           <div className="mt-3 flex items-center gap-3 text-gray-500">
             <Link
-              href={brandConfig.links.instagram}
+              href={brandConfig.links.facebook}
               target="_blank"
-              rel="noopener noreferrer"
-              data-testid="footer-instagram-link"
-              aria-label="Catchy on Instagram"
+              rel="noreferrer noopener"
+              data-testid="footer-facebook-link"
+              aria-label="Catchy on Facebook"
               className="inline-flex rounded-full p-2 transition hover:scale-110 hover:text-[var(--accent-link)] focus-visible:scale-110 focus-visible:text-[var(--accent-link)]"
             >
-              <InstagramIcon className="h-5 w-5" />
+              <FacebookIcon className="h-5 w-5" />
+            </Link>
+            <Link
+              href={brandConfig.links.linkedin}
+              target="_blank"
+              rel="noreferrer noopener"
+              data-testid="footer-linkedin-link"
+              aria-label="Catchy on LinkedIn"
+              className="inline-flex rounded-full p-2 transition hover:scale-110 hover:text-[var(--accent-link)] focus-visible:scale-110 focus-visible:text-[var(--accent-link)]"
+            >
+              <LinkedInIcon className="h-5 w-5" />
             </Link>
             <Link
               href={brandConfig.links.x}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noreferrer noopener"
               data-testid="footer-x-link"
               aria-label="Catchy on X"
               className="inline-flex rounded-full p-2 transition hover:scale-110 hover:text-[var(--accent-link)] focus-visible:scale-110 focus-visible:text-[var(--accent-link)]"
             >
               <XIcon className="h-5 w-5" />
-            </Link>
-            <Link
-              href={brandConfig.links.tiktok}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-testid="footer-tiktok-link"
-              aria-label="Catchy on TikTok"
-              className="inline-flex rounded-full p-2 transition hover:scale-110 hover:text-[var(--accent-link)] focus-visible:scale-110 focus-visible:text-[var(--accent-link)]"
-            >
-              <TikTokIcon className="h-5 w-5" />
             </Link>
           </div>
         </div>

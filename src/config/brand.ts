@@ -10,8 +10,11 @@ export const brandConfig = {
     soft: "#F7F7F8",
   },
   links: {
+    facebook:
+      "https://web.facebook.com/people/Catchy-Agency/61575114042350/?mibextid=wwXIfr&rdid=AlItQBB8pq66mF3V&share_url=https%3A%2F%2Fweb.facebook.com%2Fshare%2F14aiKcouSaE%2F%3Fmibextid%3DwwXIfr%26_rdc%3D1%26_rdr",
+    linkedin: "https://www.linkedin.com/company/catchy-global-agency/",
     instagram: "https://instagram.com/catchy_is_growth",
-    x: "https://x.com/catchy_is_growth",
+    x: "https://x.com/catchy_agency?s=21",
     tiktok: "https://www.tiktok.com/@catchy_is_growth",
     googleForm:
       "https://docs.google.com/forms/d/e/1FAIpQLSckpsXtAGwJNRMtZBaj37QTWH91qx2W78ag3hulvgGO_AdFqA/viewform",
