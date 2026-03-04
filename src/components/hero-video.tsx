@@ -3,6 +3,27 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+const HERO_VIDEO_SRC = "/videos/catchy-hero.mp4";
+
+function getMediaErrorMessage(error: MediaError | null) {
+  if (!error) {
+    return "none";
+  }
+
+  switch (error.code) {
+    case error.MEDIA_ERR_ABORTED:
+      return "aborted";
+    case error.MEDIA_ERR_NETWORK:
+      return "network";
+    case error.MEDIA_ERR_DECODE:
+      return "decode";
+    case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+      return "src_not_supported";
+    default:
+      return "unknown";
+  }
+}
+
 export function HeroVideo() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [open, setOpen] = useState(false);
@@ -55,8 +76,8 @@ export function HeroVideo() {
         return;
       }
 
-      modalVideoRef.current.muted = false;
-      modalVideoRef.current.volume = 1;
+      modalVideoRef.current.muted = true;
+      modalVideoRef.current.volume = 0;
       modalVideoRef.current.controls = true;
       void modalVideoRef.current.play().catch(() => {});
       shouldAttemptModalPlayRef.current = false;
@@ -85,6 +106,19 @@ export function HeroVideo() {
     setOpen(true);
   };
 
+  const logVideoDiagnostics = (label: "inline" | "modal", element: HTMLVideoElement | null) => {
+    if (!element) {
+      return;
+    }
+
+    console.info(`[hero-video:${label}]`, {
+      currentSrc: element.currentSrc,
+      networkState: element.networkState,
+      readyState: element.readyState,
+      error: getMediaErrorMessage(element.error),
+    });
+  };
+
   return (
     <>
       <div className="relative h-full w-full cursor-pointer transition hover:brightness-95" onClick={openModal}>
@@ -99,9 +133,10 @@ export function HeroVideo() {
           controls={false}
           poster="/placeholders/video-poster.svg"
           aria-label="Catchy hero featured service video"
+          onError={() => logVideoDiagnostics("inline", inlineVideoRef.current)}
+          onLoadedData={() => logVideoDiagnostics("inline", inlineVideoRef.current)}
         >
-          <source src="/videos/catchy-hero.webm" type="video/webm" />
-          <source src="/videos/catchy-hero.mp4" type="video/mp4" />
+          <source src={HERO_VIDEO_SRC} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
@@ -138,12 +173,14 @@ export function HeroVideo() {
                     ref={modalVideoRef}
                     className="w-full h-full object-contain"
                     style={{ maxWidth: "95vw", maxHeight: "85vh" }}
+                    muted
                     playsInline
                     preload="metadata"
                     controls
+                    onError={() => logVideoDiagnostics("modal", modalVideoRef.current)}
+                    onLoadedData={() => logVideoDiagnostics("modal", modalVideoRef.current)}
                   >
-                    <source src="/videos/catchy-hero.webm" type="video/webm" />
-                    <source src="/videos/catchy-hero.mp4" type="video/mp4" />
+                    <source src={HERO_VIDEO_SRC} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
