@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "encode:hero-video": "ffmpeg -i public/videos/catchy-hero-source.mp4 -c:v libx264 -pix_fmt yuv420p -profile:v high -level 4.1 -c:a aac -b:a 128k -movflags +faststart public/videos/catchy-hero.mp4",
     "split:testimonial-avatars": "node scripts/split-testimonial-avatars.mjs",
     "test": "vitest run",
     "test:unit": "vitest run",

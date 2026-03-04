@@ -20,6 +20,19 @@ npm run test
 npm run test:e2e
 ```
 
+## Hero Video Encoding
+
+Use a web-safe H.264/AAC file for the featured hero video.
+
+1. Put the original upload at `public/videos/catchy-hero-source.mp4`.
+2. Run:
+
+```bash
+npm run encode:hero-video
+```
+
+3. Commit the generated output file: `public/videos/catchy-hero.mp4`.
+
 ## Config
 
 Update brand settings in `src/config/brand.ts`:
