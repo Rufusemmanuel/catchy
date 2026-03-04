@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-const HERO_VIDEO_SRC = "/videos/catchy-hero.mp4";
-
 function getMediaErrorMessage(error: MediaError | null) {
   if (!error) {
     return "none";
@@ -29,7 +27,6 @@ export function HeroVideo() {
   const [open, setOpen] = useState(false);
   const inlineVideoRef = useRef<HTMLVideoElement>(null);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
-  const shouldAttemptModalPlayRef = useRef(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -47,12 +44,25 @@ export function HeroVideo() {
   }, []);
 
   const closeModal = useCallback(() => {
-    shouldAttemptModalPlayRef.current = false;
     if (modalVideoRef.current) {
       modalVideoRef.current.pause();
       modalVideoRef.current.currentTime = 0;
     }
     setOpen(false);
+  }, []);
+
+  const attemptModalPlayback = useCallback(() => {
+    const video = modalVideoRef.current;
+    if (!video) {
+      return;
+    }
+
+    video.muted = true;
+    video.volume = 0;
+    video.playsInline = true;
+    video.load();
+    console.log("[hero-video] video src:", video.currentSrc);
+    void video.play().catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -71,24 +81,14 @@ export function HeroVideo() {
 
     window.addEventListener("keydown", onEscape);
 
-    const id = window.requestAnimationFrame(() => {
-      if (!modalVideoRef.current || !shouldAttemptModalPlayRef.current) {
-        return;
-      }
-
-      modalVideoRef.current.muted = true;
-      modalVideoRef.current.volume = 0;
-      modalVideoRef.current.controls = true;
-      void modalVideoRef.current.play().catch(() => {});
-      shouldAttemptModalPlayRef.current = false;
-    });
+    const id = window.requestAnimationFrame(attemptModalPlayback);
 
     return () => {
       window.cancelAnimationFrame(id);
       window.removeEventListener("keydown", onEscape);
       document.body.style.overflow = previousOverflow;
     };
-  }, [open, closeModal]);
+  }, [open, closeModal, attemptModalPlayback]);
 
   useEffect(() => {
     if (open) {
@@ -101,9 +101,9 @@ export function HeroVideo() {
   }, [open, prefersReducedMotion]);
 
   const openModal = () => {
-    shouldAttemptModalPlayRef.current = true;
     inlineVideoRef.current?.pause();
     setOpen(true);
+    attemptModalPlayback();
   };
 
   const logVideoDiagnostics = (label: "inline" | "modal", element: HTMLVideoElement | null) => {
@@ -111,6 +111,7 @@ export function HeroVideo() {
       return;
     }
 
+    console.log("[hero-video] video src:", element.currentSrc);
     console.info(`[hero-video:${label}]`, {
       currentSrc: element.currentSrc,
       networkState: element.networkState,
@@ -136,7 +137,7 @@ export function HeroVideo() {
           onError={() => logVideoDiagnostics("inline", inlineVideoRef.current)}
           onLoadedData={() => logVideoDiagnostics("inline", inlineVideoRef.current)}
         >
-          <source src={HERO_VIDEO_SRC} type="video/mp4" />
+          <source src="/videos/catchy-hero.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
@@ -180,7 +181,7 @@ export function HeroVideo() {
                     onError={() => logVideoDiagnostics("modal", modalVideoRef.current)}
                     onLoadedData={() => logVideoDiagnostics("modal", modalVideoRef.current)}
                   >
-                    <source src={HERO_VIDEO_SRC} type="video/mp4" />
+                    <source src="/videos/catchy-hero.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
