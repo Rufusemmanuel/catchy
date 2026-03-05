@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BadgeCheck } from "lucide-react";
 import { CtaButton } from "@/components/cta-button";
 import { HeroVideo } from "@/components/hero-video";
 import { brandConfig } from "@/config/brand";
@@ -31,8 +32,9 @@ export default function CatchyVerificationPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
             Featured Trust Service
           </p>
-          <h1 className="heading-gradient mt-3 text-4xl font-bold tracking-tight">
-            Catchy Verification
+          <h1 className="heading-gradient mt-3 flex items-center gap-2 text-4xl font-bold tracking-tight">
+            <span>Catchy Verification</span>
+            <BadgeCheck className="h-6 w-6 text-blue-500" aria-hidden="true" />
           </h1>
           <p className="mt-4 text-base leading-7 text-gray-600">
             Catchy Verification helps businesses present clear trust evidence
