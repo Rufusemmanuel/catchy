@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { CtaButton } from "@/components/cta-button";
 import { HeroVideo } from "@/components/hero-video";
-import { brandConfig, services } from "@/config/brand";
+import { services } from "@/config/brand";
 
 const testimonials = [
   {
@@ -254,62 +254,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
-          Instagram Preview
-        </h2>
-        <p className="mt-2 text-gray-600">
-          Follow{" "}
-          <a
-            href={brandConfig.links.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-slate-900 hover:text-[var(--accent-link)]"
-          >
-            @catchy_is_growth
-          </a>{" "}
-          for campaigns, launches, and growth tips.
-        </p>
-        <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          {["Post placeholder", "Reel placeholder", "Story highlight placeholder"].map(
-            (item) => (
-              <div key={item} className="rounded-2xl bg-slate-50 p-5">
-                <p className="text-base text-gray-600">{item}</p>
-                <p className="mt-2 text-sm text-gray-500">
-                  Embed-ready block placeholder.
-                </p>
-              </div>
-            )
-          )}
-        </div>
-      </section>
-
-      <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200 md:flex md:items-center md:justify-between">
-        <div>
-          <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
-            Need verification? Apply in minutes.
-          </h2>
-          <p className="mt-2 text-gray-600">
-            Launch Catchy Verification as part of your broader growth plan and
-            strengthen trust at every customer touchpoint.
-          </p>
-        </div>
-        <div className="mt-5 flex flex-nowrap gap-3 md:mt-0">
-          <CtaButton
-            href="/catchy-verification"
-            className="min-w-[120px] whitespace-nowrap"
-          >
-            Apply
-          </CtaButton>
-          <CtaButton
-            href="/book-call"
-            variant="secondary"
-            className="min-w-[120px] whitespace-nowrap"
-          >
-            Consult
-          </CtaButton>
-        </div>
-      </section>
     </div>
   );
 }

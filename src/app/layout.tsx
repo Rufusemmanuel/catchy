@@ -63,7 +63,7 @@ export default function RootLayout({
         className={`${bodyFont.variable} ${headingFont.variable} bg-[var(--site-bg)] text-[var(--text-primary)] antialiased`}
       >
         <SiteHeader />
-        <main className="pb-24">{children}</main>
+        <main>{children}</main>
         <SiteFooter />
         <a
           href={brandConfig.links.whatsapp}

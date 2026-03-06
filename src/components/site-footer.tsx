@@ -4,7 +4,7 @@ import { brandConfig } from "@/config/brand";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-20 border-t border-slate-100 bg-white">
+    <footer className="border-t border-slate-100 bg-white">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
           <h2 className="heading-gradient text-lg font-semibold">Catchy</h2>
