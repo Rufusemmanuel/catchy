@@ -32,9 +32,11 @@ export default function CatchyVerificationPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
             Featured Trust Service
           </p>
-          <h1 className="heading-gradient mt-3 flex items-center gap-2 text-4xl font-bold tracking-tight">
+          <h1 className="heading-gradient mt-3 flex max-w-fit items-center gap-2.5 text-3xl font-bold tracking-tight sm:gap-3 sm:text-4xl">
             <span>Catchy Verification</span>
-            <BadgeCheck className="h-6 w-6 text-blue-500" aria-hidden="true" />
+            <span className="inline-flex flex-none items-center justify-center rounded-xl border border-blue-100 bg-blue-50/85 p-1.5 shadow-sm sm:p-1.5">
+              <BadgeCheck className="h-4 w-4 text-blue-500 sm:h-5 sm:w-5" aria-hidden="true" />
+            </span>
           </h1>
           <p className="mt-4 text-base leading-7 text-gray-600">
             Catchy Verification helps businesses present clear trust evidence
@@ -146,3 +148,4 @@ export default function CatchyVerificationPage() {
     </div>
   );
 }
+

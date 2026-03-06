@@ -54,6 +54,29 @@ const testimonials = [
   },
 ];
 
+const clientLogos = [
+  {
+    name: "Tony's Pizza",
+    src: "/logos/clients/tonys-pizza.png",
+    alt: "Tony's Pizza logo",
+  },
+  {
+    name: "Solar Equity Solutions",
+    src: "/logos/clients/solar-equity-solutions.png",
+    alt: "Solar Equity Solutions logo",
+  },
+  {
+    name: "Soctral",
+    src: "/logos/clients/soctral.png",
+    alt: "Soctral logo",
+  },
+  {
+    name: "Topia's Granola",
+    src: "/logos/clients/topias-granola.png",
+    alt: "Topia's Granola logo",
+  },
+];
+
 export default function HomePage() {
   return (
     <div className="mx-auto max-w-6xl space-y-[4.5rem] px-4 pb-16 pt-10 md:px-6 md:pt-12 lg:px-8">
@@ -94,17 +117,37 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-4 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100 sm:grid-cols-3">
-        {[
-          ["150+", "Brands Supported"],
-          ["320+", "Credibility Videos Produced"],
-          ["95%", "Client Retention (Placeholder)"],
-        ].map(([value, label]) => (
-          <div key={label} className="rounded-2xl bg-slate-50 p-4">
-            <p className="text-2xl font-bold text-slate-900">{value}</p>
-            <p className="text-base text-gray-600">{label}</p>
-          </div>
-        ))}
+      <section
+        aria-labelledby="trusted-by-growing-brands"
+        className="rounded-3xl bg-white px-6 py-8 shadow-sm ring-1 ring-slate-100 sm:px-8 sm:py-10"
+      >
+        <p
+          id="trusted-by-growing-brands"
+          className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C3AED]"
+        >
+          Trusted by growing brands
+        </p>
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+          {clientLogos.map((logo) => (
+            <article
+              key={logo.name}
+              className="rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:ring-1 hover:ring-[#7C3AED]/20 sm:p-3"
+            >
+              <div className="flex min-h-24 items-center justify-center rounded-xl bg-slate-50/90 px-4 py-3 sm:min-h-[6.75rem]">
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={260}
+                  height={120}
+                  className="h-20 w-full object-contain object-center sm:h-[5.5rem]"
+                />
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="mx-auto mt-5 max-w-3xl text-center text-sm leading-6 text-slate-500">
+          Helping brands scale through strategy, content, and performance marketing.
+        </p>
       </section>
 
       <section className="space-y-7">
@@ -167,41 +210,6 @@ export default function HomePage() {
           <CtaButton href="/catchy-verification">
             Apply for Catchy Verification
           </CtaButton>
-        </div>
-      </section>
-
-      <section className="space-y-6">
-        <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
-          Recent Work
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {[
-            "Global Market Entry Sprint",
-            "Brand Narrative Refresh",
-            "Performance Funnel Rebuild",
-            "Website Conversion Upgrade",
-            "Always-On Social Engine",
-            "Strategic Partnerships Launch",
-          ].map((item) => (
-            <article
-              key={item}
-              className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-100"
-            >
-              <Image
-                src="/placeholders/portfolio-card.svg"
-                alt="Portfolio placeholder"
-                width={600}
-                height={360}
-                className="h-40 w-full object-cover"
-              />
-              <div className="p-4">
-                <h3 className="heading-gradient text-xl font-semibold">{item}</h3>
-                <p className="mt-1 text-base text-gray-600">
-                  Placeholder portfolio summary for this category.
-                </p>
-              </div>
-            </article>
-          ))}
         </div>
       </section>
 
