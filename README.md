@@ -81,6 +81,11 @@ Required environment variables:
 
 ```bash
 NEXTAUTH_SECRET=replace-with-long-random-secret
+# Use either KV REST envs OR REDIS_URL
+KV_REST_API_URL=your-vercel-kv-rest-url
+KV_REST_API_TOKEN=your-vercel-kv-rest-token
+REDIS_URL=redis://default:password@host:port
+BLOB_READ_WRITE_TOKEN=your-vercel-blob-read-write-token
 CATCHY_ADMIN_USERS_JSON=[{"email":"admin@example.com","name":"Primary Admin","role":"admin","password_hash":"$2b$12$...","totp_secret":"OPTIONAL_BASE32_SECRET"}]
 # Optional safer transport to avoid `$` escaping issues in `.env` files:
 # CATCHY_ADMIN_USERS_JSON_B64=base64-encoded-json
@@ -112,9 +117,10 @@ MFA is supported per admin account by setting `totp_secret` (compatible with sta
 
 Verified business data is stored in:
 
-- `data/verified-businesses.json`
-- `data/admin-audit-log.json` (admin-only security and mutation audit trail)
-- `data/admin-login-attempts.json` (rate-limit state)
+- Production: Redis-backed durable storage via either:
+- `KV_REST_API_URL` + `KV_REST_API_TOKEN` (Vercel KV-compatible REST)
+- `REDIS_URL` (direct Redis connection), plus Vercel Blob for uploaded logos (`BLOB_READ_WRITE_TOKEN`)
+- Local development fallback: `data/verified-businesses.json`, `data/admin-audit-log.json`, `data/admin-login-attempts.json`
 
 This file contains:
 

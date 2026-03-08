@@ -2,6 +2,12 @@ import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
+  durableStoreEnvHint,
+  hasDurableStoreConfig,
+  storeGet,
+  storeSet,
+} from "@/lib/server-store";
+import {
   VERIFICATION_STATUSES,
   clampScore,
   deriveTrustLevel,
@@ -67,6 +73,8 @@ export type VerifiedBusinessInput = {
 };
 
 const DATA_FILE_PATH = path.join(process.cwd(), "data", "verified-businesses.json");
+const VERIFIED_DATA_KV_KEY = "catchy:verified:data:v1";
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 function defaultData(): VerifiedDataFile {
   return {
@@ -86,6 +94,20 @@ async function ensureDataFile() {
 }
 
 async function readDataFile(): Promise<VerifiedDataFile> {
+  if (hasDurableStoreConfig()) {
+    const parsed = (await storeGet<Partial<VerifiedDataFile>>(VERIFIED_DATA_KV_KEY)) ?? defaultData();
+    return {
+      verified_businesses: (parsed.verified_businesses ?? []).map((record) => {
+        const typedRecord = record as LegacyVerifiedBusiness;
+        return {
+          ...typedRecord,
+          logo_url: normalizeText(typedRecord.logo_url || typedRecord.logo_path),
+        };
+      }),
+      verification_reviews: parsed.verification_reviews ?? [],
+    };
+  }
+
   await ensureDataFile();
   const contents = await fs.readFile(DATA_FILE_PATH, "utf8");
 
@@ -107,6 +129,17 @@ async function readDataFile(): Promise<VerifiedDataFile> {
 }
 
 async function writeDataFile(data: VerifiedDataFile) {
+  if (hasDurableStoreConfig()) {
+    await storeSet(VERIFIED_DATA_KV_KEY, data);
+    return;
+  }
+
+  if (IS_PRODUCTION) {
+    throw new Error(
+      `Verified business storage is not configured for production. ${durableStoreEnvHint()}`
+    );
+  }
+
   await ensureDataFile();
   const next = JSON.stringify(data, null, 2);
   const tempFile = `${DATA_FILE_PATH}.tmp`;

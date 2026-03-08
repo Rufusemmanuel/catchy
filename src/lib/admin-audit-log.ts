@@ -2,6 +2,12 @@ import "server-only";
 
 import fs from "node:fs/promises";
 import path from "node:path";
+import {
+  durableStoreEnvHint,
+  hasDurableStoreConfig,
+  storeGet,
+  storeSet,
+} from "@/lib/server-store";
 
 export type AdminAuditAction =
   | "admin_login"
@@ -27,7 +33,9 @@ type AuditFile = {
 };
 
 const AUDIT_FILE_PATH = path.join(process.cwd(), "data", "admin-audit-log.json");
+const AUDIT_KV_KEY = "catchy:admin:audit:v1";
 const MAX_AUDIT_ENTRIES = 5000;
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 function defaultData(): AuditFile {
   return { entries: [] };
@@ -43,6 +51,17 @@ async function ensureFile() {
 }
 
 async function readData(): Promise<AuditFile> {
+  if (hasDurableStoreConfig()) {
+    const parsed = (await storeGet<Partial<AuditFile>>(AUDIT_KV_KEY)) ?? defaultData();
+    return { entries: parsed.entries ?? [] };
+  }
+
+  if (IS_PRODUCTION) {
+    throw new Error(
+      `Audit log storage is not configured for production. ${durableStoreEnvHint()}`
+    );
+  }
+
   await ensureFile();
   try {
     const raw = await fs.readFile(AUDIT_FILE_PATH, "utf8");
@@ -54,6 +73,17 @@ async function readData(): Promise<AuditFile> {
 }
 
 async function writeData(data: AuditFile) {
+  if (hasDurableStoreConfig()) {
+    await storeSet(AUDIT_KV_KEY, data);
+    return;
+  }
+
+  if (IS_PRODUCTION) {
+    throw new Error(
+      `Audit log storage is not configured for production. ${durableStoreEnvHint()}`
+    );
+  }
+
   await ensureFile();
   const temp = `${AUDIT_FILE_PATH}.tmp`;
   await fs.writeFile(temp, JSON.stringify(data, null, 2), "utf8");

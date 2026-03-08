@@ -2,6 +2,13 @@ import "server-only";
 
 import fs from "node:fs/promises";
 import path from "node:path";
+import {
+  durableStoreEnvHint,
+  hasDurableStoreConfig,
+  storeDel,
+  storeGet,
+  storeSet,
+} from "@/lib/server-store";
 
 type AttemptRecord = {
   key: string;
@@ -16,10 +23,12 @@ type AttemptsFile = {
 };
 
 const ATTEMPTS_FILE_PATH = path.join(process.cwd(), "data", "admin-login-attempts.json");
+const ATTEMPT_KEY_PREFIX = "catchy:admin:login-attempt:v1";
 
 const DEFAULT_MAX_ATTEMPTS = Number(process.env.CATCHY_ADMIN_LOGIN_MAX_ATTEMPTS ?? 5);
 const DEFAULT_WINDOW_MINUTES = Number(process.env.CATCHY_ADMIN_LOGIN_WINDOW_MINUTES ?? 15);
 const DEFAULT_LOCK_MINUTES = Number(process.env.CATCHY_ADMIN_LOGIN_LOCK_MINUTES ?? 30);
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 function now(): Date {
   return new Date();
@@ -27,6 +36,10 @@ function now(): Date {
 
 function makeKey(ip: string, email: string): string {
   return `${ip || "unknown"}::${email.toLowerCase().trim()}`;
+}
+
+function makeKvKey(ip: string, email: string): string {
+  return `${ATTEMPT_KEY_PREFIX}:${makeKey(ip, email)}`;
 }
 
 function defaultData(): AttemptsFile {
@@ -70,6 +83,32 @@ function pruneExpired(records: AttemptRecord[]): AttemptRecord[] {
 }
 
 export async function getLoginLockStatus(ip: string, email: string): Promise<{ locked: boolean; retryAfterSeconds: number }> {
+  if (hasDurableStoreConfig()) {
+    const key = makeKvKey(ip, email);
+    const record = await storeGet<AttemptRecord>(key);
+
+    if (!record?.locked_until) {
+      return { locked: false, retryAfterSeconds: 0 };
+    }
+
+    const lockUntil = Date.parse(record.locked_until);
+    const remainingMs = lockUntil - now().getTime();
+    if (!Number.isFinite(lockUntil) || remainingMs <= 0) {
+      return { locked: false, retryAfterSeconds: 0 };
+    }
+
+    return {
+      locked: true,
+      retryAfterSeconds: Math.ceil(remainingMs / 1000),
+    };
+  }
+
+  if (IS_PRODUCTION) {
+    throw new Error(
+      `Login rate-limit storage is not configured for production. ${durableStoreEnvHint()}`
+    );
+  }
+
   const data = await readFileData();
   const key = makeKey(ip, email);
   const record = data.records.find((candidate) => candidate.key === key);
@@ -91,6 +130,55 @@ export async function getLoginLockStatus(ip: string, email: string): Promise<{ l
 }
 
 export async function registerFailedLoginAttempt(ip: string, email: string): Promise<void> {
+  if (hasDurableStoreConfig()) {
+    const key = makeKvKey(ip, email);
+    const currentTime = now();
+    const currentIso = currentTime.toISOString();
+    const windowStart = currentTime.getTime() - DEFAULT_WINDOW_MINUTES * 60 * 1000;
+    const existing = await storeGet<AttemptRecord>(key);
+
+    if (!existing) {
+      await storeSet(
+        key,
+        {
+          key: makeKey(ip, email),
+          attempts: 1,
+          first_attempt_at: currentIso,
+          last_attempt_at: currentIso,
+        } satisfies AttemptRecord,
+        { exSeconds: 24 * 60 * 60 }
+      );
+      return;
+    }
+
+    const firstAttemptMs = Date.parse(existing.first_attempt_at);
+    const isOutsideWindow = !Number.isFinite(firstAttemptMs) || firstAttemptMs < windowStart;
+    const attempts = isOutsideWindow ? 1 : existing.attempts + 1;
+    const firstAttemptAt = isOutsideWindow ? currentIso : existing.first_attempt_at;
+
+    const next: AttemptRecord = {
+      ...existing,
+      attempts,
+      first_attempt_at: firstAttemptAt,
+      last_attempt_at: currentIso,
+    };
+
+    if (attempts >= DEFAULT_MAX_ATTEMPTS) {
+      next.locked_until = new Date(
+        currentTime.getTime() + DEFAULT_LOCK_MINUTES * 60 * 1000
+      ).toISOString();
+    }
+
+    await storeSet(key, next, { exSeconds: 24 * 60 * 60 });
+    return;
+  }
+
+  if (IS_PRODUCTION) {
+    throw new Error(
+      `Login rate-limit storage is not configured for production. ${durableStoreEnvHint()}`
+    );
+  }
+
   const data = await readFileData();
   const key = makeKey(ip, email);
   const currentTime = now();
@@ -134,6 +222,17 @@ export async function registerFailedLoginAttempt(ip: string, email: string): Pro
 }
 
 export async function clearLoginAttempts(ip: string, email: string): Promise<void> {
+  if (hasDurableStoreConfig()) {
+    await storeDel(makeKvKey(ip, email));
+    return;
+  }
+
+  if (IS_PRODUCTION) {
+    throw new Error(
+      `Login rate-limit storage is not configured for production. ${durableStoreEnvHint()}`
+    );
+  }
+
   const data = await readFileData();
   const key = makeKey(ip, email);
   data.records = data.records.filter((record) => record.key !== key);

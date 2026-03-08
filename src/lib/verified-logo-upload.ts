@@ -3,6 +3,7 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { put } from "@vercel/blob";
 import type { VerifiedBusinessInput } from "@/lib/verified-businesses";
 import { VERIFICATION_STATUSES, type VerificationStatus } from "@/lib/verified-businesses-shared";
 import {
@@ -46,6 +47,7 @@ const BOOLEAN_FIELDS = ["featured", "is_public"] as const;
 
 const UPLOAD_DIRECTORY_PATH = path.join(process.cwd(), "public", "uploads", "verified-logos");
 const UPLOAD_PUBLIC_PREFIX = "/uploads/verified-logos";
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 function readText(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -116,13 +118,29 @@ async function writeUploadedLogo(file: File): Promise<string> {
     ? "webp"
     : "svg";
 
-  await fs.mkdir(UPLOAD_DIRECTORY_PATH, { recursive: true });
-
   const baseName = sanitizeFilename(path.basename(file.name, path.extname(file.name)));
   const uniqueName = `${Date.now()}-${randomUUID().slice(0, 8)}-${baseName}.${extension}`;
+
+  if (IS_PRODUCTION) {
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      throw new Error(
+        "Logo upload storage is not configured for production. Set BLOB_READ_WRITE_TOKEN."
+      );
+    }
+
+    const blob = await put(`verified-logos/${uniqueName}`, file, {
+      access: "public",
+      addRandomSuffix: false,
+      contentType: file.type || undefined,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
+
+    return blob.url;
+  }
+
+  await fs.mkdir(UPLOAD_DIRECTORY_PATH, { recursive: true });
   const absolutePath = path.join(UPLOAD_DIRECTORY_PATH, uniqueName);
   const bytes = Buffer.from(await file.arrayBuffer());
-
   await fs.writeFile(absolutePath, bytes);
   return `${UPLOAD_PUBLIC_PREFIX}/${uniqueName}`;
 }
