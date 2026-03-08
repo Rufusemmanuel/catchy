@@ -33,6 +33,14 @@ public/videos/catchy-hero-source.mov
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# runtime admin/security data
+data/admin-audit-log.json
+data/admin-login-attempts.json
+
+# local uploads from admin UI
+public/uploads/
 
 # vercel
 .vercel

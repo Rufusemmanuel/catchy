@@ -11,7 +11,7 @@ const navItems = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/catchy-verification", label: "Verification" },
-  { href: "/work", label: "Work" },
+  { href: "/verified", label: "Business" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];

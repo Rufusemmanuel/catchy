@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { BadgeCheck } from "lucide-react";
 import { CtaButton } from "@/components/cta-button";
 import { HeroVideo } from "@/components/hero-video";
@@ -59,6 +60,25 @@ export default function CatchyVerificationPage() {
           the credibility gap by turning your real operations into clear,
           confidence-building communication.
         </p>
+      </section>
+
+      <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#7C3AED]">
+          Public Trust Profiles
+        </p>
+        <h2 className="heading-gradient mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+          Discover verified businesses
+        </h2>
+        <p className="mt-3 text-base leading-7 text-gray-600">
+          Businesses verified by Catchy can be discovered through our public verification directory.
+          Visitors can review trust status and profile summaries before making decisions.
+        </p>
+        <Link
+          href="/verified"
+          className="mt-5 inline-flex h-11 items-center justify-center rounded-xl border border-[var(--button-primary)] px-5 text-sm font-semibold text-[var(--button-primary)] transition hover:bg-[#7C3AED]/8"
+        >
+          Browse verified businesses
+        </Link>
       </section>
 
       <section className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">

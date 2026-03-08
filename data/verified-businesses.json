@@ -1,0 +1,44 @@
+{
+  "verified_businesses": [
+    {
+      "id": "biz_soctral",
+      "business_name": "Soctral",
+      "slug": "soctral",
+      "logo_url": "/logos/clients/soctral.png",
+      "industry": "Technology",
+      "location": "Accra, Ghana",
+      "website_url": "https://www.soctral.example",
+      "instagram_url": "",
+      "facebook_url": "",
+      "linkedin_url": "",
+      "phone": "+233 800 000 1003",
+      "email": "hello@soctral.example",
+      "verification_status": "active",
+      "verified_date": "2026-02-12",
+      "last_reviewed_date": "2026-02-12",
+      "trust_score": 90,
+      "trust_level": "High",
+      "short_summary": "Growth-focused technology company with strong credibility signals and operational clarity.",
+      "full_description": "Soctral completed a full Catchy verification cycle including authenticity checks, operational consistency review, and trust communication assessment.",
+      "what_was_verified": "Authenticity indicators, operational consistency, public brand signals, and customer trust touchpoints.",
+      "featured": true,
+      "is_public": true,
+      "created_at": "2026-02-12T13:20:00.000Z",
+      "updated_at": "2026-02-12T13:20:00.000Z"
+    }
+  ],
+  "verification_reviews": [
+    {
+      "id": "rev_soctral",
+      "business_id": "biz_soctral",
+      "reviewer_name": "Catchy Field Team",
+      "authenticity_score": 92,
+      "brand_presence_score": 88,
+      "customer_credibility_score": 89,
+      "legitimacy_score": 91,
+      "operational_consistency_score": 90,
+      "internal_notes": "Excellent consistency between operational process and public trust messaging.",
+      "reviewed_at": "2026-02-12"
+    }
+  ]
+}
