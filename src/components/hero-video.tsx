@@ -57,11 +57,10 @@ export function HeroVideo() {
       return;
     }
 
-    video.muted = true;
-    video.volume = 0;
+    video.muted = false;
+    video.volume = 1;
     video.playsInline = true;
     video.load();
-    console.log("[hero-video] video src:", video.currentSrc);
     void video.play().catch(() => {});
   }, []);
 
@@ -111,7 +110,6 @@ export function HeroVideo() {
       return;
     }
 
-    console.log("[hero-video] video src:", element.currentSrc);
     console.info(`[hero-video:${label}]`, {
       currentSrc: element.currentSrc,
       networkState: element.networkState,
@@ -174,7 +172,6 @@ export function HeroVideo() {
                     ref={modalVideoRef}
                     className="w-full h-full object-contain"
                     style={{ maxWidth: "95vw", maxHeight: "85vh" }}
-                    muted
                     playsInline
                     preload="metadata"
                     controls
