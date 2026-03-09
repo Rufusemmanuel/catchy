@@ -42,7 +42,7 @@ const NUMBER_FIELDS = [
   "safety_trust_signals_score",
 ] as const;
 
-const BOOLEAN_FIELDS = ["featured", "is_public"] as const;
+const BOOLEAN_FIELDS = ["is_public"] as const;
 
 const UPLOAD_DIRECTORY_PATH = path.join(process.cwd(), "public", "uploads", "verified-logos");
 const UPLOAD_PUBLIC_PREFIX = "/uploads/verified-logos";

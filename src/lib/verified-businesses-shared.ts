@@ -46,7 +46,6 @@ export type VerifiedBusiness = {
   trust_level: TrustLevel;
   short_summary: string;
   what_was_verified: string;
-  featured: boolean;
   is_public: boolean;
   created_at: string;
   updated_at: string;

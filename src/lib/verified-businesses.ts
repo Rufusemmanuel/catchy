@@ -72,7 +72,6 @@ export type VerifiedBusinessInput = {
   trust_score?: number;
   short_summary?: string;
   what_was_verified?: string;
-  featured?: boolean;
   is_public?: boolean;
   reviewer_name?: string;
   business_legitimacy_score?: number;
@@ -243,10 +242,6 @@ function toPublicBusiness(business: VerifiedBusiness): PublicVerifiedBusiness {
 }
 
 function sortPublicBusinesses(a: VerifiedBusiness, b: VerifiedBusiness): number {
-  if (a.featured !== b.featured) {
-    return a.featured ? -1 : 1;
-  }
-
   return b.verified_date.localeCompare(a.verified_date);
 }
 
@@ -271,7 +266,6 @@ export async function getPublicVerifiedBusinesses(options?: {
   query?: string;
   industry?: string;
   status?: VerificationStatus | "";
-  featuredOnly?: boolean;
 }): Promise<PublicVerifiedBusiness[]> {
   const data = await readDataFile();
   const query = normalizeText(options?.query).toLowerCase();
@@ -280,7 +274,6 @@ export async function getPublicVerifiedBusinesses(options?: {
 
   return data.verified_businesses
     .filter((business) => business.is_public)
-    .filter((business) => !options?.featuredOnly || business.featured)
     .filter((business) => {
       if (!query) {
         return true;
@@ -304,11 +297,6 @@ export async function getPublicVerifiedBusinesses(options?: {
     })
     .sort(sortPublicBusinesses)
     .map(toPublicBusiness);
-}
-
-export async function getFeaturedPublicVerifiedBusinesses(limit = 4): Promise<PublicVerifiedBusiness[]> {
-  const businesses = await getPublicVerifiedBusinesses({ featuredOnly: true });
-  return businesses.slice(0, limit);
 }
 
 export async function getPublicVerifiedBusinessBySlug(slug: string): Promise<PublicVerifiedBusiness | null> {
@@ -413,7 +401,6 @@ export async function saveVerifiedBusiness(input: VerifiedBusinessInput): Promis
     short_summary: normalizeText(input.short_summary),
     verified_video_url: normalizeUrl(input.verified_video_url),
     what_was_verified: normalizeText(input.what_was_verified),
-    featured: Boolean(input.featured),
     is_public: Boolean(input.is_public),
     created_at: nowIso,
     updated_at: nowIso,

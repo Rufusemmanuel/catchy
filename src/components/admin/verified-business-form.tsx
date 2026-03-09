@@ -47,7 +47,6 @@ type FormState = {
   safety_trust_signals_score: number | "";
   internal_notes: string;
   reviewed_at: string;
-  featured: boolean;
   is_public: boolean;
 };
 
@@ -96,7 +95,6 @@ function buildInitialState(record?: AdminBusinessRecord): FormState {
       safety_trust_signals_score: "",
       internal_notes: "",
       reviewed_at: "",
-      featured: false,
       is_public: false,
     };
   }
@@ -139,7 +137,6 @@ function buildInitialState(record?: AdminBusinessRecord): FormState {
       : fallbackScores.safety_trust_signals_score,
     internal_notes: record.review?.internal_notes ?? "",
     reviewed_at: record.review?.reviewed_at ?? "",
-    featured: record.business.featured,
     is_public: record.business.is_public,
   };
 }
@@ -604,10 +601,6 @@ export function VerifiedBusinessForm({
             Save as draft keeps the profile private. Publish uses your current visibility settings.
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-slate-700">
-            <label className="inline-flex items-center gap-2">
-              <input type="checkbox" checked={form.featured} onChange={(e) => setField("featured", e.target.checked)} />
-              Featured on homepage
-            </label>
             <label className="inline-flex items-center gap-2">
               <input type="checkbox" checked={form.is_public} onChange={(e) => setField("is_public", e.target.checked)} />
               Publicly visible
