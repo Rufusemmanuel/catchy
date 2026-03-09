@@ -59,21 +59,6 @@ export default function ContactPage() {
               Instagram
             </Link>
           </div>
-          <div className="inline-flex w-full items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
-            <span className="font-medium text-slate-700">Email</span>
-            <a
-              href="mailto:info.catchy1@gmail.com"
-              className="font-semibold text-slate-900 hover:text-purple-700"
-            >
-              info.catchy1@gmail.com
-            </a>
-          </div>
-          <Link
-            href="/book-call"
-            className="inline-flex h-11 items-center justify-center rounded-xl border border-purple-600 px-6 text-base font-medium text-purple-700 transition hover:bg-purple-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/30"
-          >
-            Book a Consultation
-          </Link>
         </aside>
       </div>
     </div>
