@@ -607,7 +607,7 @@ function ScoreField({
         min={0}
         max={20}
         step={1}
-        placeholder="020"
+        placeholder="0-20"
         value={value}
         onChange={(e) => handleChange(e.target.value)}
         className={inputClass}
