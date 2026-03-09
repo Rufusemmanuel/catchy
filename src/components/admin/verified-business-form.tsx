@@ -19,6 +19,7 @@ import {
   MAX_LOGO_UPLOAD_BYTES,
   formatLogoUploadLimit,
 } from "@/lib/verified-logo-shared";
+import { VerifiedBusinessLogo } from "@/components/verified-business-logo";
 
 type FormState = {
   business_name: string;
@@ -49,6 +50,9 @@ type FormState = {
   featured: boolean;
   is_public: boolean;
 };
+
+const LOGO_RECOMMENDED_MAX_DIMENSION = 512;
+const RASTER_LOGO_MIME_TYPES = ["image/png", "image/jpeg", "image/webp"] as const;
 
 function buildFallbackInternalScores(trustScore: number) {
   const normalized = Math.max(0, Math.min(100, Math.round(Number(trustScore) || 0)));
@@ -140,6 +144,72 @@ function buildInitialState(record?: AdminBusinessRecord): FormState {
   };
 }
 
+function isRasterLogoMimeType(file: File): boolean {
+  return RASTER_LOGO_MIME_TYPES.includes(file.type.toLowerCase() as (typeof RASTER_LOGO_MIME_TYPES)[number]);
+}
+
+async function readRasterImage(file: File): Promise<{ width: number; height: number; image: HTMLImageElement }> {
+  const objectUrl = URL.createObjectURL(file);
+
+  try {
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const element = new Image();
+      element.onload = () => resolve(element);
+      element.onerror = () => reject(new Error("Unable to read image dimensions."));
+      element.src = objectUrl;
+    });
+
+    return { width: image.naturalWidth, height: image.naturalHeight, image };
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+}
+
+async function resizeRasterLogoFile(file: File, maxDimension: number): Promise<File> {
+  const { width, height, image } = await readRasterImage(file);
+  const longestSide = Math.max(width, height);
+
+  if (longestSide <= maxDimension) {
+    return file;
+  }
+
+  const scale = maxDimension / longestSide;
+  const nextWidth = Math.max(1, Math.round(width * scale));
+  const nextHeight = Math.max(1, Math.round(height * scale));
+
+  const canvas = document.createElement("canvas");
+  canvas.width = nextWidth;
+  canvas.height = nextHeight;
+
+  const context = canvas.getContext("2d");
+  if (!context) {
+    return file;
+  }
+
+  context.drawImage(image, 0, 0, nextWidth, nextHeight);
+
+  const mimeType = file.type.toLowerCase();
+  const targetMimeType =
+    mimeType === "image/png"
+      ? "image/png"
+      : mimeType === "image/webp"
+      ? "image/webp"
+      : "image/jpeg";
+
+  const blob = await new Promise<Blob | null>((resolve) =>
+    canvas.toBlob(resolve, targetMimeType, 0.9)
+  );
+
+  if (!blob) {
+    return file;
+  }
+
+  return new File([blob], file.name, {
+    type: targetMimeType,
+    lastModified: Date.now(),
+  });
+}
+
 export function VerifiedBusinessForm({
   mode,
   businessId,
@@ -158,6 +228,7 @@ export function VerifiedBusinessForm({
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreviewUrl, setLogoPreviewUrl] = useState("");
   const [logoError, setLogoError] = useState("");
+  const [logoHint, setLogoHint] = useState("");
   const hasCustomIndustry =
     Boolean(form.industry) && !VERIFIED_BUSINESS_INDUSTRIES.includes(form.industry);
 
@@ -193,6 +264,7 @@ export function VerifiedBusinessForm({
     const file = event.target.files?.[0];
 
     setLogoError("");
+    setLogoHint("");
 
     if (!file) {
       if (logoPreviewUrl) {
@@ -200,6 +272,7 @@ export function VerifiedBusinessForm({
       }
       setLogoFile(null);
       setLogoPreviewUrl("");
+      setLogoHint("");
       return;
     }
 
@@ -217,6 +290,7 @@ export function VerifiedBusinessForm({
       }
       setLogoFile(null);
       setLogoPreviewUrl("");
+      setLogoHint("");
       setLogoError("Invalid logo file type. Use PNG, JPG, JPEG, WEBP, or SVG.");
       event.currentTarget.value = "";
       return;
@@ -228,17 +302,56 @@ export function VerifiedBusinessForm({
       }
       setLogoFile(null);
       setLogoPreviewUrl("");
+      setLogoHint("");
       setLogoError(`Logo file is too large. Maximum size is ${formatLogoUploadLimit(MAX_LOGO_UPLOAD_BYTES)}.`);
       event.currentTarget.value = "";
       return;
     }
 
-    if (logoPreviewUrl) {
-      URL.revokeObjectURL(logoPreviewUrl);
-    }
+    void (async () => {
+      try {
+        const selectedFile = file;
+        const normalizedFile = isRasterLogoMimeType(selectedFile)
+          ? await resizeRasterLogoFile(selectedFile, LOGO_RECOMMENDED_MAX_DIMENSION)
+          : selectedFile;
 
-    setLogoFile(file);
-    setLogoPreviewUrl(URL.createObjectURL(file));
+        if (normalizedFile.size > MAX_LOGO_UPLOAD_BYTES) {
+          if (logoPreviewUrl) {
+            URL.revokeObjectURL(logoPreviewUrl);
+          }
+          setLogoFile(null);
+          setLogoPreviewUrl("");
+          setLogoHint("");
+          setLogoError(`Logo file is too large. Maximum size is ${formatLogoUploadLimit(MAX_LOGO_UPLOAD_BYTES)}.`);
+          event.currentTarget.value = "";
+          return;
+        }
+
+        if (isRasterLogoMimeType(normalizedFile)) {
+          const { width, height } = await readRasterImage(normalizedFile);
+          const ratioGap = Math.abs(width - height) / Math.max(width, height);
+          if (ratioGap > 0.1) {
+            setLogoHint("For best display, use a square logo.");
+          }
+        }
+
+        if (logoPreviewUrl) {
+          URL.revokeObjectURL(logoPreviewUrl);
+        }
+
+        setLogoFile(normalizedFile);
+        setLogoPreviewUrl(URL.createObjectURL(normalizedFile));
+      } catch {
+        if (logoPreviewUrl) {
+          URL.revokeObjectURL(logoPreviewUrl);
+        }
+        setLogoFile(null);
+        setLogoPreviewUrl("");
+        setLogoHint("");
+        setLogoError("Unable to process this logo file. Try another image.");
+        event.currentTarget.value = "";
+      }
+    })();
   };
 
   const clearSelectedLogoFile = () => {
@@ -248,6 +361,7 @@ export function VerifiedBusinessForm({
     setLogoFile(null);
     setLogoPreviewUrl("");
     setLogoError("");
+    setLogoHint("");
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -336,7 +450,7 @@ export function VerifiedBusinessForm({
                   className={`${inputClass} h-auto cursor-pointer px-3 py-2`}
                 />
                 <p className="text-xs text-slate-500">
-                  Upload from your computer. Supported formats: PNG, JPG, JPEG, WEBP, SVG. Max {formatLogoUploadLimit(MAX_LOGO_UPLOAD_BYTES)}.
+                  Recommended logo format: square image (1:1 ratio), 512×512 for best display. Supported formats: PNG, JPG, JPEG, WEBP, SVG. Max {formatLogoUploadLimit(MAX_LOGO_UPLOAD_BYTES)}.
                 </p>
                 {logoFile ? (
                   <div className="flex flex-wrap items-center gap-2">
@@ -352,6 +466,7 @@ export function VerifiedBusinessForm({
                 ) : form.logo_url ? (
                   <p className="text-xs text-slate-600">Current logo: {form.logo_url}</p>
                 ) : null}
+                {logoHint ? <p className="text-xs text-amber-700">{logoHint}</p> : null}
                 {logoError ? <p className="text-xs text-red-700">{logoError}</p> : null}
               </div>
             </Field>
@@ -525,15 +640,12 @@ export function VerifiedBusinessForm({
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#7C3AED]">Live Preview</p>
           <h3 className="mt-2 text-lg font-semibold text-slate-900">{form.business_name || "Business name"}</h3>
           <p className="mt-1 text-sm text-slate-600">{form.industry || "Industry"}</p>
-          <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-3">
-            {logoPreviewSource ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={logoPreviewSource} alt="Logo preview" className="h-20 w-full object-contain" />
-            ) : (
-              <div className="flex h-20 items-center justify-center text-xs text-slate-500">
-                Logo preview
-              </div>
-            )}
+          <div className="mt-4">
+            <VerifiedBusinessLogo
+              src={logoPreviewSource}
+              alt={`${form.business_name || "Business"} logo preview`}
+              className="mx-auto max-w-[10.5rem] sm:max-w-[11.5rem]"
+            />
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
             <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ${getVerificationStatusClasses(form.verification_status)}`}>

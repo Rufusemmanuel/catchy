@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { VerifiedBusinessLogo } from "@/components/verified-business-logo";
 import {
   getPublicVerifiedBusinessBySlug,
 } from "@/lib/verified-businesses";
@@ -68,15 +68,11 @@ export default async function VerifiedBusinessProfilePage({
               {business.short_summary || "Public trust summary will be updated after the latest review cycle."}
             </p>
           </div>
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <Image
-              src={business.logo_url || "/logo.png"}
-              alt={`${business.business_name} logo`}
-              width={360}
-              height={180}
-              className="h-24 w-full object-contain"
-            />
-          </div>
+          <VerifiedBusinessLogo
+            src={business.logo_url || "/logo.png"}
+            alt={`${business.business_name} logo`}
+            className="mx-auto max-w-[12.5rem] p-5 sm:max-w-[13.5rem]"
+          />
         </div>
       </section>
 

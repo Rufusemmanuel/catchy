@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { VerifiedBusinessLogo } from "@/components/verified-business-logo";
 import { getPublicDirectoryFilters, getPublicVerifiedBusinesses, type VerificationStatus } from "@/lib/verified-businesses";
 import {
   formatVerificationStatus,
@@ -97,15 +97,11 @@ export default async function VerifiedDirectoryPage({
         <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {businesses.map((business) => (
             <article key={business.id} className="flex h-full flex-col rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-100">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-3">
-                <Image
-                  src={business.logo_url || "/logo.png"}
-                  alt={`${business.business_name} logo`}
-                  width={280}
-                  height={120}
-                  className="h-16 w-full object-contain"
-                />
-              </div>
+              <VerifiedBusinessLogo
+                src={business.logo_url || "/logo.png"}
+                alt={`${business.business_name} logo`}
+                className="mx-auto max-w-[9.5rem] sm:max-w-[10.5rem]"
+              />
               <div className="mt-4 flex items-start justify-between gap-3">
                 <div>
                   <h2 className="text-lg font-semibold text-slate-900">{business.business_name}</h2>
