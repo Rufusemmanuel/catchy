@@ -39,11 +39,11 @@ type FormState = {
   verified_date: string;
   last_reviewed_date: string;
   reviewer_name: string;
-  business_legitimacy_score: number;
-  online_presence_accuracy_score: number;
-  customer_experience_score: number;
-  service_quality_score: number;
-  safety_trust_signals_score: number;
+  business_legitimacy_score: number | "";
+  online_presence_accuracy_score: number | "";
+  customer_experience_score: number | "";
+  service_quality_score: number | "";
+  safety_trust_signals_score: number | "";
   internal_notes: string;
   reviewed_at: string;
   featured: boolean;
@@ -85,11 +85,11 @@ function buildInitialState(record?: AdminBusinessRecord): FormState {
       verified_date: "",
       last_reviewed_date: "",
       reviewer_name: "",
-      business_legitimacy_score: 0,
-      online_presence_accuracy_score: 0,
-      customer_experience_score: 0,
-      service_quality_score: 0,
-      safety_trust_signals_score: 0,
+      business_legitimacy_score: "",
+      online_presence_accuracy_score: "",
+      customer_experience_score: "",
+      service_quality_score: "",
+      safety_trust_signals_score: "",
       internal_notes: "",
       reviewed_at: "",
       featured: false,
@@ -118,16 +118,21 @@ function buildInitialState(record?: AdminBusinessRecord): FormState {
     verified_date: record.business.verified_date,
     last_reviewed_date: record.business.last_reviewed_date,
     reviewer_name: record.review?.reviewer_name ?? "",
-    business_legitimacy_score:
-      record.review?.business_legitimacy_score ?? fallbackScores.business_legitimacy_score,
-    online_presence_accuracy_score:
-      record.review?.online_presence_accuracy_score ?? fallbackScores.online_presence_accuracy_score,
-    customer_experience_score:
-      record.review?.customer_experience_score ?? fallbackScores.customer_experience_score,
-    service_quality_score:
-      record.review?.service_quality_score ?? fallbackScores.service_quality_score,
-    safety_trust_signals_score:
-      record.review?.safety_trust_signals_score ?? fallbackScores.safety_trust_signals_score,
+    business_legitimacy_score: record.review
+      ? record.review.business_legitimacy_score
+      : fallbackScores.business_legitimacy_score,
+    online_presence_accuracy_score: record.review
+      ? record.review.online_presence_accuracy_score
+      : fallbackScores.online_presence_accuracy_score,
+    customer_experience_score: record.review
+      ? record.review.customer_experience_score
+      : fallbackScores.customer_experience_score,
+    service_quality_score: record.review
+      ? record.review.service_quality_score
+      : fallbackScores.service_quality_score,
+    safety_trust_signals_score: record.review
+      ? record.review.safety_trust_signals_score
+      : fallbackScores.safety_trust_signals_score,
     internal_notes: record.review?.internal_notes ?? "",
     reviewed_at: record.review?.reviewed_at ?? "",
     featured: record.business.featured,
@@ -577,13 +582,18 @@ function ScoreField({
   onChange,
 }: {
   label: string;
-  value: number;
-  onChange: (next: number) => void;
+  value: number | "";
+  onChange: (next: number | "") => void;
 }) {
   const handleChange = (raw: string) => {
+    if (raw === "") {
+      onChange("");
+      return;
+    }
+
     const parsed = Number(raw || 0);
     if (!Number.isFinite(parsed)) {
-      onChange(0);
+      onChange("");
       return;
     }
 
@@ -592,7 +602,16 @@ function ScoreField({
 
   return (
     <Field label={label}>
-      <input type="number" min={0} max={20} value={value} onChange={(e) => handleChange(e.target.value)} className={inputClass} />
+      <input
+        type="number"
+        min={0}
+        max={20}
+        step={1}
+        placeholder="020"
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+        className={inputClass}
+      />
     </Field>
   );
 }
