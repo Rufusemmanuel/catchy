@@ -1,4 +1,25 @@
-export const VERIFICATION_STATUSES = ["active", "pending", "expired", "revoked"] as const;
+export const VERIFICATION_STATUSES = ["active", "expired"] as const;
+export const VERIFIED_BUSINESS_INDUSTRIES: readonly string[] = [
+  "Food & Beverage",
+  "Retail",
+  "Technology",
+  "E-commerce",
+  "Health & Wellness",
+  "Education & Training",
+  "Construction & Real Estate",
+  "Automotive",
+  "Beauty & Personal Care",
+  "Finance & Insurance",
+  "Hospitality & Tourism",
+  "Logistics & Transportation",
+  "Manufacturing",
+  "Agriculture",
+  "Events & Entertainment",
+  "Professional Services",
+  "Media & Marketing",
+  "Nonprofit / NGO",
+  "Other",
+];
 
 export type VerificationStatus = (typeof VERIFICATION_STATUSES)[number];
 
@@ -9,6 +30,7 @@ export type VerifiedBusiness = {
   business_name: string;
   slug: string;
   logo_url: string;
+  verified_video_url: string;
   industry: string;
   location: string;
   website_url: string;
@@ -23,7 +45,6 @@ export type VerifiedBusiness = {
   trust_score: number;
   trust_level: TrustLevel;
   short_summary: string;
-  full_description: string;
   what_was_verified: string;
   featured: boolean;
   is_public: boolean;
@@ -35,11 +56,11 @@ export type VerificationReview = {
   id: string;
   business_id: string;
   reviewer_name: string;
-  authenticity_score: number;
-  brand_presence_score: number;
-  customer_credibility_score: number;
-  legitimacy_score: number;
-  operational_consistency_score: number;
+  business_legitimacy_score: number;
+  online_presence_accuracy_score: number;
+  customer_experience_score: number;
+  service_quality_score: number;
+  safety_trust_signals_score: number;
   internal_notes: string;
   reviewed_at: string;
 };
@@ -91,15 +112,7 @@ export function getVerificationStatusClasses(status: VerificationStatus): string
     return "bg-emerald-50 text-emerald-700 ring-emerald-100";
   }
 
-  if (status === "pending") {
-    return "bg-amber-50 text-amber-700 ring-amber-100";
-  }
-
-  if (status === "expired") {
-    return "bg-slate-100 text-slate-700 ring-slate-200";
-  }
-
-  return "bg-rose-50 text-rose-700 ring-rose-100";
+  return "bg-slate-100 text-slate-700 ring-slate-200";
 }
 
 export function formatVerificationStatus(status: VerificationStatus): string {
@@ -107,15 +120,7 @@ export function formatVerificationStatus(status: VerificationStatus): string {
     return "Active";
   }
 
-  if (status === "pending") {
-    return "Pending";
-  }
-
-  if (status === "expired") {
-    return "Expired";
-  }
-
-  return "Revoked";
+  return "Expired";
 }
 
 export function getTrustLevelClasses(level: TrustLevel): string {

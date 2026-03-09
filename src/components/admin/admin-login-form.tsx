@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export function AdminLoginForm() {
@@ -25,6 +25,13 @@ export function AdminLoginForm() {
     });
 
     if (!result || result.error) {
+      const session = await getSession();
+      if (session?.user?.role === "admin") {
+        router.replace("/admin/verified");
+        router.refresh();
+        return;
+      }
+
       if (result?.error === "locked") {
         setError("Too many failed attempts. Try again later.");
       } else if (result?.error === "unauthorized") {
@@ -36,7 +43,7 @@ export function AdminLoginForm() {
       return;
     }
 
-    router.push("/admin/verified");
+    router.replace("/admin/verified");
     router.refresh();
   };
 

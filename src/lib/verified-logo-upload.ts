@@ -16,6 +16,7 @@ const TEXT_FIELDS = [
   "business_name",
   "slug",
   "logo_url",
+  "verified_video_url",
   "industry",
   "location",
   "website_url",
@@ -27,7 +28,6 @@ const TEXT_FIELDS = [
   "verified_date",
   "last_reviewed_date",
   "short_summary",
-  "full_description",
   "what_was_verified",
   "reviewer_name",
   "internal_notes",
@@ -35,12 +35,11 @@ const TEXT_FIELDS = [
 ] as const;
 
 const NUMBER_FIELDS = [
-  "trust_score",
-  "authenticity_score",
-  "brand_presence_score",
-  "customer_credibility_score",
-  "legitimacy_score",
-  "operational_consistency_score",
+  "business_legitimacy_score",
+  "online_presence_accuracy_score",
+  "customer_experience_score",
+  "service_quality_score",
+  "safety_trust_signals_score",
 ] as const;
 
 const BOOLEAN_FIELDS = ["featured", "is_public"] as const;

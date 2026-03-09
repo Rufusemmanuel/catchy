@@ -3,6 +3,11 @@ import "server-only";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import {
+  isAdminIpAllowed,
+  parseAdminIpAllowlist,
+  resolveRequestIpFromHeaders,
+} from "@/lib/admin-ip";
 
 export type AdminPrincipal = {
   id: string;
@@ -12,39 +17,15 @@ export type AdminPrincipal = {
   mfaEnabled: boolean;
 };
 
-function parseIpAllowlist(): string[] {
-  return (process.env.CATCHY_ADMIN_IP_ALLOWLIST ?? "")
-    .split(",")
-    .map((value) => value.trim())
-    .filter(Boolean);
-}
-
 async function getRequestIp(): Promise<string> {
   const requestHeaders = await headers();
-  const forwarded = requestHeaders.get("x-forwarded-for");
-  if (forwarded) {
-    return forwarded.split(",")[0]?.trim() ?? "";
-  }
-
-  return (
-    requestHeaders.get("x-real-ip") ??
-    requestHeaders.get("cf-connecting-ip") ??
-    ""
-  ).trim();
-}
-
-function isAllowedIp(ip: string, allowlist: string[]): boolean {
-  if (!allowlist.length) {
-    return true;
-  }
-
-  return Boolean(ip) && allowlist.includes(ip);
+  return resolveRequestIpFromHeaders(requestHeaders);
 }
 
 export async function isCurrentRequestIpAllowed(): Promise<boolean> {
-  const allowlist = parseIpAllowlist();
+  const allowlist = parseAdminIpAllowlist();
   const requestIp = await getRequestIp();
-  return isAllowedIp(requestIp, allowlist);
+  return isAdminIpAllowed(requestIp, allowlist);
 }
 
 function toAdminPrincipal(session: Awaited<ReturnType<typeof auth>>): AdminPrincipal | null {

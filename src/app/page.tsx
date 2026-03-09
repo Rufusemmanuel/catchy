@@ -1,14 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { CtaButton } from "@/components/cta-button";
 import { HeroVideo } from "@/components/hero-video";
 import { services } from "@/config/brand";
-import { getFeaturedPublicVerifiedBusinesses } from "@/lib/verified-businesses";
-import {
-  formatVerificationStatus,
-  getTrustLevelClasses,
-  getVerificationStatusClasses,
-} from "@/lib/verified-businesses-shared";
 
 const testimonials = [
   {
@@ -85,8 +78,6 @@ const clientLogos = [
 ];
 
 export default async function HomePage() {
-  const featuredVerifiedBusinesses = await getFeaturedPublicVerifiedBusinesses(4);
-
   return (
     <div className="mx-auto max-w-6xl space-y-[4.5rem] px-4 pb-16 pt-10 md:px-6 md:pt-12 lg:px-8">
       <section className="reveal-up grid gap-7 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-100 sm:p-6 md:grid-cols-2 md:p-12">
@@ -157,118 +148,6 @@ export default async function HomePage() {
         <p className="mx-auto mt-5 max-w-3xl text-center text-sm leading-6 text-slate-500">
           Helping brands scale through strategy, content, and performance marketing.
         </p>
-      </section>
-
-      <section className="rounded-3xl bg-white px-6 py-8 shadow-sm ring-1 ring-slate-100 sm:px-8 sm:py-10">
-        <div className="space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C3AED]">
-            Public Verification Directory
-          </p>
-          <h2 className="heading-gradient text-2xl font-bold tracking-tight sm:text-3xl">
-            Browse all verified businesses
-          </h2>
-          <p className="max-w-3xl text-base leading-7 text-slate-600">
-            Explore businesses verified by Catchy and review public trust profiles built from onsite
-            verification outcomes.
-          </p>
-        </div>
-
-        <form
-          action="/verified"
-          className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4"
-        >
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <input
-              type="search"
-              name="q"
-              placeholder="Search verified businesses..."
-              className="h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none transition focus:border-[#7C3AED]/50 focus:ring-2 focus:ring-[#7C3AED]/15"
-            />
-            <button
-              type="submit"
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-[var(--button-primary)] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--button-primary-hover)] sm:w-auto"
-            >
-              Search
-            </button>
-          </div>
-        </form>
-
-        {featuredVerifiedBusinesses.length > 0 ? (
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {featuredVerifiedBusinesses.map((business) => (
-              <article
-                key={business.id}
-                className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-              >
-                <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3">
-                  <Image
-                    src={business.logo_url || "/logo.png"}
-                    alt={`${business.business_name} logo`}
-                    width={260}
-                    height={120}
-                    className="h-14 w-full object-contain"
-                  />
-                </div>
-
-                <div className="mt-4">
-                  <h3 className="text-base font-semibold text-slate-900">{business.business_name}</h3>
-                  <p className="mt-1 text-sm text-slate-600">{business.industry || "Uncategorized"}</p>
-                </div>
-
-                <div className="mt-3 flex flex-wrap items-center gap-2">
-                  <span className="inline-flex rounded-full bg-[#7C3AED]/10 px-2.5 py-1 text-xs font-semibold text-[#7C3AED]">
-                    Verified by Catchy
-                  </span>
-                  <span
-                    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ${getVerificationStatusClasses(
-                      business.verification_status
-                    )}`}
-                  >
-                    {formatVerificationStatus(business.verification_status)}
-                  </span>
-                </div>
-
-                <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5">
-                  <p className="text-xs font-medium uppercase tracking-[0.12em] text-slate-500">
-                    Catchy Trust Score
-                  </p>
-                  <div className="mt-1 flex items-center gap-2">
-                    <p className="text-lg font-semibold leading-none text-slate-900">
-                      {business.trust_score}
-                    </p>
-                    <span
-                      className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${getTrustLevelClasses(
-                        business.trust_level
-                      )}`}
-                    >
-                      {business.trust_level}
-                    </span>
-                  </div>
-                </div>
-
-                <Link
-                  href={`/verified/${business.slug}`}
-                  className="mt-4 inline-flex text-sm font-semibold text-[#7C3AED] hover:underline"
-                >
-                  View profile
-                </Link>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-5 text-sm text-slate-600">
-            Featured verified business profiles will appear here once published.
-          </div>
-        )}
-
-        <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/90 px-4 py-3 text-sm leading-6 text-slate-600">
-          The Catchy Trust Score reflects Catchy&apos;s internal verification review and is not a
-          legal certification or financial endorsement.
-        </div>
-
-        <div className="mt-5">
-          <CtaButton href="/verified">Browse all verified businesses</CtaButton>
-        </div>
       </section>
 
       <section className="space-y-7">

@@ -153,7 +153,7 @@ export default function CatchyVerificationPage() {
         <div className="mt-4 space-y-3 text-base leading-7 text-gray-600">
           <p>
             <span className="font-semibold">Is selection guaranteed?</span> No.
-            Selection is based on fit and available monthly capacity.
+            Businesses are selected only if they qualify for Catchy Verification standards.
           </p>
           <p>
             <span className="font-semibold">How long does review take?</span>{" "}

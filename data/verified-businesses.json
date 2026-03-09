@@ -24,7 +24,34 @@
       "featured": true,
       "is_public": true,
       "created_at": "2026-02-12T13:20:00.000Z",
-      "updated_at": "2026-02-12T13:20:00.000Z"
+      "updated_at": "2026-02-12T13:20:00.000Z",
+      "verified_video_url": ""
+    },
+    {
+      "id": "996ade4a-2a10-47f9-95ef-c1214e993783",
+      "business_name": "Globund",
+      "slug": "globund",
+      "logo_url": "/uploads/verified-logos/1773050538200-eda7acfb-img_0006.png",
+      "industry": "Hospitality & Tourism",
+      "location": "No 7 Amatu street egbu owerri",
+      "website_url": "https://globund.com",
+      "instagram_url": "https://xxxx",
+      "facebook_url": "https://xxxx",
+      "linkedin_url": "https://xxx",
+      "phone": "09036163391",
+      "email": "rufusemmanuel123@gmail.com",
+      "verification_status": "active",
+      "verified_date": "2026-03-06",
+      "last_reviewed_date": "2026-03-06",
+      "trust_score": 83,
+      "trust_level": "Strong",
+      "short_summary": "a tech industry",
+      "verified_video_url": "https://catchy-delta.vercel.app/admin/verified/new",
+      "what_was_verified": "we verified the business",
+      "featured": false,
+      "is_public": true,
+      "created_at": "2026-03-09T10:02:18.218Z",
+      "updated_at": "2026-03-09T10:02:18.218Z"
     }
   ],
   "verification_reviews": [
@@ -32,13 +59,25 @@
       "id": "rev_soctral",
       "business_id": "biz_soctral",
       "reviewer_name": "Catchy Field Team",
-      "authenticity_score": 92,
-      "brand_presence_score": 88,
-      "customer_credibility_score": 89,
-      "legitimacy_score": 91,
-      "operational_consistency_score": 90,
+      "business_legitimacy_score": 20,
+      "online_presence_accuracy_score": 20,
+      "customer_experience_score": 20,
+      "service_quality_score": 20,
+      "safety_trust_signals_score": 20,
       "internal_notes": "Excellent consistency between operational process and public trust messaging.",
       "reviewed_at": "2026-02-12"
+    },
+    {
+      "id": "7d270e58-7332-4db7-b5e9-e0733c454a62",
+      "business_id": "996ade4a-2a10-47f9-95ef-c1214e993783",
+      "reviewer_name": "rufus emmanuel",
+      "business_legitimacy_score": 18,
+      "online_presence_accuracy_score": 17,
+      "customer_experience_score": 15,
+      "service_quality_score": 17,
+      "safety_trust_signals_score": 16,
+      "internal_notes": "done by emmanuel",
+      "reviewed_at": "2026-03-06"
     }
   ]
 }

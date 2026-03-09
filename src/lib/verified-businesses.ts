@@ -8,6 +8,7 @@ import {
   storeSet,
 } from "@/lib/server-store";
 import {
+  VERIFIED_BUSINESS_INDUSTRIES,
   VERIFICATION_STATUSES,
   clampScore,
   deriveTrustLevel,
@@ -20,6 +21,7 @@ import {
 } from "@/lib/verified-businesses-shared";
 
 export {
+  VERIFIED_BUSINESS_INDUSTRIES,
   VERIFICATION_STATUSES,
   clampScore,
   deriveTrustLevel,
@@ -36,8 +38,18 @@ type VerifiedDataFile = {
   verification_reviews: VerificationReview[];
 };
 
-type LegacyVerifiedBusiness = VerifiedBusiness & {
+type LegacyVerifiedBusiness = Omit<VerifiedBusiness, "verified_video_url"> & {
+  verified_video_url?: string;
   logo_path?: string;
+  full_description?: string;
+};
+
+type LegacyVerificationReview = VerificationReview & {
+  authenticity_score?: number;
+  brand_presence_score?: number;
+  customer_credibility_score?: number;
+  legitimacy_score?: number;
+  operational_consistency_score?: number;
 };
 
 export type VerifiedBusinessInput = {
@@ -45,6 +57,7 @@ export type VerifiedBusinessInput = {
   business_name: string;
   slug?: string;
   logo_url?: string;
+  verified_video_url?: string;
   industry?: string;
   location?: string;
   website_url?: string;
@@ -58,16 +71,15 @@ export type VerifiedBusinessInput = {
   last_reviewed_date?: string;
   trust_score?: number;
   short_summary?: string;
-  full_description?: string;
   what_was_verified?: string;
   featured?: boolean;
   is_public?: boolean;
   reviewer_name?: string;
-  authenticity_score?: number;
-  brand_presence_score?: number;
-  customer_credibility_score?: number;
-  legitimacy_score?: number;
-  operational_consistency_score?: number;
+  business_legitimacy_score?: number;
+  online_presence_accuracy_score?: number;
+  customer_experience_score?: number;
+  service_quality_score?: number;
+  safety_trust_signals_score?: number;
   internal_notes?: string;
   reviewed_at?: string;
 };
@@ -102,9 +114,13 @@ async function readDataFile(): Promise<VerifiedDataFile> {
         return {
           ...typedRecord,
           logo_url: normalizeText(typedRecord.logo_url || typedRecord.logo_path),
+          verified_video_url: normalizeUrl(typedRecord.verified_video_url),
+          verification_status: normalizeVerificationStatus(typedRecord.verification_status),
         };
       }),
-      verification_reviews: parsed.verification_reviews ?? [],
+      verification_reviews: (parsed.verification_reviews ?? []).map((record) =>
+        normalizeReviewRecord(record as LegacyVerificationReview)
+      ),
     };
   }
 
@@ -119,9 +135,13 @@ async function readDataFile(): Promise<VerifiedDataFile> {
         return {
           ...typedRecord,
           logo_url: normalizeText(typedRecord.logo_url || typedRecord.logo_path),
+          verified_video_url: normalizeUrl(typedRecord.verified_video_url),
+          verification_status: normalizeVerificationStatus(typedRecord.verification_status),
         };
       }),
-      verification_reviews: parsed.verification_reviews ?? [],
+      verification_reviews: (parsed.verification_reviews ?? []).map((record) =>
+        normalizeReviewRecord(record as LegacyVerificationReview)
+      ),
     };
   } catch {
     return defaultData();
@@ -167,6 +187,53 @@ function normalizeUrl(value: string | undefined): string {
 
 function normalizeText(value: string | undefined): string {
   return (value ?? "").trim();
+}
+
+function normalizeVerificationStatus(value: string | undefined): VerificationStatus {
+  if (value === "active" || value === "expired") {
+    return value;
+  }
+
+  return "expired";
+}
+
+function clampInternalScore(value: number): number {
+  if (!Number.isFinite(value)) {
+    return 0;
+  }
+
+  return Math.max(0, Math.min(20, Math.round(value)));
+}
+
+function normalizeReviewRecord(record: LegacyVerificationReview): VerificationReview {
+  const legitimacyScore = clampInternalScore(
+    record.business_legitimacy_score ?? record.legitimacy_score ?? 0
+  );
+  const onlinePresenceScore = clampInternalScore(
+    record.online_presence_accuracy_score ?? record.brand_presence_score ?? 0
+  );
+  const customerExperienceScore = clampInternalScore(
+    record.customer_experience_score ?? record.customer_credibility_score ?? 0
+  );
+  const serviceQualityScore = clampInternalScore(
+    record.service_quality_score ?? record.operational_consistency_score ?? 0
+  );
+  const safetyTrustSignalsScore = clampInternalScore(
+    record.safety_trust_signals_score ?? record.authenticity_score ?? 0
+  );
+
+  return {
+    id: record.id,
+    business_id: record.business_id,
+    reviewer_name: normalizeText(record.reviewer_name),
+    business_legitimacy_score: legitimacyScore,
+    online_presence_accuracy_score: onlinePresenceScore,
+    customer_experience_score: customerExperienceScore,
+    service_quality_score: serviceQualityScore,
+    safety_trust_signals_score: safetyTrustSignalsScore,
+    internal_notes: normalizeText(record.internal_notes),
+    reviewed_at: normalizeText(record.reviewed_at),
+  };
 }
 
 function toPublicBusiness(business: VerifiedBusiness): PublicVerifiedBusiness {
@@ -261,19 +328,8 @@ export async function getPublicDirectoryFilters(): Promise<{
   industries: string[];
   statuses: VerificationStatus[];
 }> {
-  const data = await readDataFile();
-
-  const industries = Array.from(
-    new Set(
-      data.verified_businesses
-        .filter((business) => business.is_public)
-        .map((business) => business.industry)
-        .filter(Boolean)
-    )
-  ).sort((a, b) => a.localeCompare(b));
-
   return {
-    industries,
+    industries: [...VERIFIED_BUSINESS_INDUSTRIES],
     statuses: [...VERIFICATION_STATUSES],
   };
 }
@@ -318,7 +374,20 @@ export async function saveVerifiedBusiness(input: VerifiedBusinessInput): Promis
   const baseSlug = slugifyBusinessName(normalizeText(input.slug) || businessName);
   const slug = getUniqueSlug(baseSlug, data.verified_businesses, input.id);
 
-  const trustScore = clampScore(Number(input.trust_score ?? 0));
+  const businessLegitimacyScore = clampInternalScore(Number(input.business_legitimacy_score ?? 0));
+  const onlinePresenceAccuracyScore = clampInternalScore(
+    Number(input.online_presence_accuracy_score ?? 0)
+  );
+  const customerExperienceScore = clampInternalScore(Number(input.customer_experience_score ?? 0));
+  const serviceQualityScore = clampInternalScore(Number(input.service_quality_score ?? 0));
+  const safetyTrustSignalsScore = clampInternalScore(Number(input.safety_trust_signals_score ?? 0));
+  const trustScore = clampScore(
+    businessLegitimacyScore +
+      onlinePresenceAccuracyScore +
+      customerExperienceScore +
+      serviceQualityScore +
+      safetyTrustSignalsScore
+  );
   const trustLevel = deriveTrustLevel(trustScore);
   const inputWithLegacyLogo = input as VerifiedBusinessInput & { logo_path?: string };
   const resolvedLogoUrl = normalizeText(input.logo_url || inputWithLegacyLogo.logo_path);
@@ -336,13 +405,13 @@ export async function saveVerifiedBusiness(input: VerifiedBusinessInput): Promis
     linkedin_url: normalizeUrl(input.linkedin_url),
     phone: normalizeText(input.phone),
     email: normalizeText(input.email),
-    verification_status: input.verification_status ?? "pending",
+    verification_status: normalizeVerificationStatus(input.verification_status),
     verified_date: normalizeText(input.verified_date),
     last_reviewed_date: normalizeText(input.last_reviewed_date),
     trust_score: trustScore,
     trust_level: trustLevel,
     short_summary: normalizeText(input.short_summary),
-    full_description: normalizeText(input.full_description),
+    verified_video_url: normalizeUrl(input.verified_video_url),
     what_was_verified: normalizeText(input.what_was_verified),
     featured: Boolean(input.featured),
     is_public: Boolean(input.is_public),
@@ -367,11 +436,11 @@ export async function saveVerifiedBusiness(input: VerifiedBusinessInput): Promis
     id: randomUUID(),
     business_id: id,
     reviewer_name: normalizeText(input.reviewer_name),
-    authenticity_score: clampScore(Number(input.authenticity_score ?? 0)),
-    brand_presence_score: clampScore(Number(input.brand_presence_score ?? 0)),
-    customer_credibility_score: clampScore(Number(input.customer_credibility_score ?? 0)),
-    legitimacy_score: clampScore(Number(input.legitimacy_score ?? 0)),
-    operational_consistency_score: clampScore(Number(input.operational_consistency_score ?? 0)),
+    business_legitimacy_score: businessLegitimacyScore,
+    online_presence_accuracy_score: onlinePresenceAccuracyScore,
+    customer_experience_score: customerExperienceScore,
+    service_quality_score: serviceQualityScore,
+    safety_trust_signals_score: safetyTrustSignalsScore,
     internal_notes: normalizeText(input.internal_notes),
     reviewed_at: normalizeText(input.reviewed_at),
   };

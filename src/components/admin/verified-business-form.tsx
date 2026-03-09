@@ -8,6 +8,7 @@ import {
   getTrustLevelClasses,
   getVerificationStatusClasses,
   slugifyBusinessName,
+  VERIFIED_BUSINESS_INDUSTRIES,
   VERIFICATION_STATUSES,
   type AdminBusinessRecord,
 } from "@/lib/verified-businesses-shared";
@@ -23,6 +24,7 @@ type FormState = {
   business_name: string;
   slug: string;
   logo_url: string;
+  verified_video_url: string;
   industry: string;
   location: string;
   website_url: string;
@@ -32,23 +34,35 @@ type FormState = {
   phone: string;
   email: string;
   short_summary: string;
-  full_description: string;
   what_was_verified: string;
   verification_status: (typeof VERIFICATION_STATUSES)[number];
   verified_date: string;
   last_reviewed_date: string;
-  trust_score: number;
   reviewer_name: string;
-  authenticity_score: number;
-  brand_presence_score: number;
-  customer_credibility_score: number;
-  legitimacy_score: number;
-  operational_consistency_score: number;
+  business_legitimacy_score: number;
+  online_presence_accuracy_score: number;
+  customer_experience_score: number;
+  service_quality_score: number;
+  safety_trust_signals_score: number;
   internal_notes: string;
   reviewed_at: string;
   featured: boolean;
   is_public: boolean;
 };
+
+function buildFallbackInternalScores(trustScore: number) {
+  const normalized = Math.max(0, Math.min(100, Math.round(Number(trustScore) || 0)));
+  const base = Math.floor(normalized / 5);
+  const remainder = normalized % 5;
+
+  return {
+    business_legitimacy_score: base + (remainder > 0 ? 1 : 0),
+    online_presence_accuracy_score: base + (remainder > 1 ? 1 : 0),
+    customer_experience_score: base + (remainder > 2 ? 1 : 0),
+    service_quality_score: base + (remainder > 3 ? 1 : 0),
+    safety_trust_signals_score: base,
+  };
+}
 
 function buildInitialState(record?: AdminBusinessRecord): FormState {
   if (!record) {
@@ -56,6 +70,7 @@ function buildInitialState(record?: AdminBusinessRecord): FormState {
       business_name: "",
       slug: "",
       logo_url: "",
+      verified_video_url: "",
       industry: "",
       location: "",
       website_url: "",
@@ -65,18 +80,16 @@ function buildInitialState(record?: AdminBusinessRecord): FormState {
       phone: "",
       email: "",
       short_summary: "",
-      full_description: "",
       what_was_verified: "",
-      verification_status: "pending",
+      verification_status: "active",
       verified_date: "",
       last_reviewed_date: "",
-      trust_score: 0,
       reviewer_name: "",
-      authenticity_score: 0,
-      brand_presence_score: 0,
-      customer_credibility_score: 0,
-      legitimacy_score: 0,
-      operational_consistency_score: 0,
+      business_legitimacy_score: 0,
+      online_presence_accuracy_score: 0,
+      customer_experience_score: 0,
+      service_quality_score: 0,
+      safety_trust_signals_score: 0,
       internal_notes: "",
       reviewed_at: "",
       featured: false,
@@ -84,10 +97,13 @@ function buildInitialState(record?: AdminBusinessRecord): FormState {
     };
   }
 
+  const fallbackScores = buildFallbackInternalScores(record.business.trust_score);
+
   return {
     business_name: record.business.business_name,
     slug: record.business.slug,
     logo_url: record.business.logo_url,
+    verified_video_url: record.business.verified_video_url,
     industry: record.business.industry,
     location: record.business.location,
     website_url: record.business.website_url,
@@ -97,18 +113,21 @@ function buildInitialState(record?: AdminBusinessRecord): FormState {
     phone: record.business.phone,
     email: record.business.email,
     short_summary: record.business.short_summary,
-    full_description: record.business.full_description,
     what_was_verified: record.business.what_was_verified,
     verification_status: record.business.verification_status,
     verified_date: record.business.verified_date,
     last_reviewed_date: record.business.last_reviewed_date,
-    trust_score: record.business.trust_score,
     reviewer_name: record.review?.reviewer_name ?? "",
-    authenticity_score: record.review?.authenticity_score ?? 0,
-    brand_presence_score: record.review?.brand_presence_score ?? 0,
-    customer_credibility_score: record.review?.customer_credibility_score ?? 0,
-    legitimacy_score: record.review?.legitimacy_score ?? 0,
-    operational_consistency_score: record.review?.operational_consistency_score ?? 0,
+    business_legitimacy_score:
+      record.review?.business_legitimacy_score ?? fallbackScores.business_legitimacy_score,
+    online_presence_accuracy_score:
+      record.review?.online_presence_accuracy_score ?? fallbackScores.online_presence_accuracy_score,
+    customer_experience_score:
+      record.review?.customer_experience_score ?? fallbackScores.customer_experience_score,
+    service_quality_score:
+      record.review?.service_quality_score ?? fallbackScores.service_quality_score,
+    safety_trust_signals_score:
+      record.review?.safety_trust_signals_score ?? fallbackScores.safety_trust_signals_score,
     internal_notes: record.review?.internal_notes ?? "",
     reviewed_at: record.review?.reviewed_at ?? "",
     featured: record.business.featured,
@@ -134,8 +153,25 @@ export function VerifiedBusinessForm({
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreviewUrl, setLogoPreviewUrl] = useState("");
   const [logoError, setLogoError] = useState("");
+  const hasCustomIndustry =
+    Boolean(form.industry) && !VERIFIED_BUSINESS_INDUSTRIES.includes(form.industry);
 
-  const trustLevel = useMemo(() => deriveTrustLevel(Number(form.trust_score)), [form.trust_score]);
+  const trustScore = useMemo(
+    () =>
+      Number(form.business_legitimacy_score || 0) +
+      Number(form.online_presence_accuracy_score || 0) +
+      Number(form.customer_experience_score || 0) +
+      Number(form.service_quality_score || 0) +
+      Number(form.safety_trust_signals_score || 0),
+    [
+      form.business_legitimacy_score,
+      form.online_presence_accuracy_score,
+      form.customer_experience_score,
+      form.service_quality_score,
+      form.safety_trust_signals_score,
+    ]
+  );
+  const trustLevel = useMemo(() => deriveTrustLevel(trustScore), [trustScore]);
   const logoPreviewSource = logoPreviewUrl || form.logo_url;
 
   useEffect(() => () => {
@@ -217,12 +253,11 @@ export function VerifiedBusinessForm({
     try {
       const payload = {
         ...form,
-        trust_score: Number(form.trust_score),
-        authenticity_score: Number(form.authenticity_score),
-        brand_presence_score: Number(form.brand_presence_score),
-        customer_credibility_score: Number(form.customer_credibility_score),
-        legitimacy_score: Number(form.legitimacy_score),
-        operational_consistency_score: Number(form.operational_consistency_score),
+        business_legitimacy_score: Number(form.business_legitimacy_score),
+        online_presence_accuracy_score: Number(form.online_presence_accuracy_score),
+        customer_experience_score: Number(form.customer_experience_score),
+        service_quality_score: Number(form.service_quality_score),
+        safety_trust_signals_score: Number(form.safety_trust_signals_score),
         is_public: intent === "draft" ? false : form.is_public,
       };
       const formData = new FormData();
@@ -333,7 +368,17 @@ export function VerifiedBusinessForm({
               </details>
             </div>
             <Field label="Industry">
-              <input value={form.industry} onChange={(e) => setField("industry", e.target.value)} className={inputClass} />
+              <select value={form.industry} onChange={(e) => setField("industry", e.target.value)} className={inputClass}>
+                <option value="">Select industry</option>
+                {hasCustomIndustry ? (
+                  <option value={form.industry}>{form.industry} (existing value)</option>
+                ) : null}
+                {VERIFIED_BUSINESS_INDUSTRIES.map((industry) => (
+                  <option key={industry} value={industry}>
+                    {industry}
+                  </option>
+                ))}
+              </select>
             </Field>
             <Field label="Location">
               <input value={form.location} onChange={(e) => setField("location", e.target.value)} className={inputClass} />
@@ -346,6 +391,15 @@ export function VerifiedBusinessForm({
             </Field>
             <Field label="Website URL">
               <input value={form.website_url} onChange={(e) => setField("website_url", e.target.value)} className={inputClass} />
+            </Field>
+            <Field label="Link to verified video">
+              <input
+                type="url"
+                value={form.verified_video_url}
+                onChange={(e) => setField("verified_video_url", e.target.value)}
+                className={inputClass}
+                placeholder="https://..."
+              />
             </Field>
             <Field label="Instagram URL">
               <input value={form.instagram_url} onChange={(e) => setField("instagram_url", e.target.value)} className={inputClass} />
@@ -365,9 +419,6 @@ export function VerifiedBusinessForm({
             <Field label="Short summary">
               <textarea rows={2} value={form.short_summary} onChange={(e) => setField("short_summary", e.target.value)} className={textareaClass} />
             </Field>
-            <Field label="Full description">
-              <textarea rows={4} value={form.full_description} onChange={(e) => setField("full_description", e.target.value)} className={textareaClass} />
-            </Field>
             <Field label="What was verified">
               <textarea rows={3} value={form.what_was_verified} onChange={(e) => setField("what_was_verified", e.target.value)} className={textareaClass} />
             </Field>
@@ -377,7 +428,7 @@ export function VerifiedBusinessForm({
         <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-100 sm:p-6">
           <h2 className="text-base font-semibold text-slate-900">Verification status + trust score</h2>
           <p className="mt-1 text-sm text-slate-600">
-            Trust level is derived automatically from the trust score.
+            Trust score and trust level are derived automatically from internal review scores.
           </p>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Field label="Verification status">
@@ -388,7 +439,7 @@ export function VerifiedBusinessForm({
               </select>
             </Field>
             <Field label="Trust score (0-100)">
-              <input type="number" min={0} max={100} value={form.trust_score} onChange={(e) => setField("trust_score", Number(e.target.value || 0))} className={inputClass} />
+              <input type="number" min={0} max={100} value={trustScore} disabled readOnly className={`${inputClass} bg-slate-100 text-slate-700`} />
             </Field>
             <Field label="Verified date">
               <input type="date" value={form.verified_date} onChange={(e) => setField("verified_date", e.target.value)} className={inputClass} />
@@ -414,11 +465,11 @@ export function VerifiedBusinessForm({
             <Field label="Reviewed at">
               <input type="date" value={form.reviewed_at} onChange={(e) => setField("reviewed_at", e.target.value)} className={inputClass} />
             </Field>
-            <ScoreField label="Authenticity score" value={form.authenticity_score} onChange={(value) => setField("authenticity_score", value)} />
-            <ScoreField label="Brand presence score" value={form.brand_presence_score} onChange={(value) => setField("brand_presence_score", value)} />
-            <ScoreField label="Customer credibility score" value={form.customer_credibility_score} onChange={(value) => setField("customer_credibility_score", value)} />
-            <ScoreField label="Legitimacy score" value={form.legitimacy_score} onChange={(value) => setField("legitimacy_score", value)} />
-            <ScoreField label="Operational consistency score" value={form.operational_consistency_score} onChange={(value) => setField("operational_consistency_score", value)} />
+            <ScoreField label="Business legitimacy score" value={form.business_legitimacy_score} onChange={(value) => setField("business_legitimacy_score", value)} />
+            <ScoreField label="Online presence accuracy score" value={form.online_presence_accuracy_score} onChange={(value) => setField("online_presence_accuracy_score", value)} />
+            <ScoreField label="Customer experience score" value={form.customer_experience_score} onChange={(value) => setField("customer_experience_score", value)} />
+            <ScoreField label="Service / product quality score" value={form.service_quality_score} onChange={(value) => setField("service_quality_score", value)} />
+            <ScoreField label="Safety & trust signals score" value={form.safety_trust_signals_score} onChange={(value) => setField("safety_trust_signals_score", value)} />
           </div>
           <div className="mt-4">
             <Field label="Internal notes">
@@ -489,7 +540,7 @@ export function VerifiedBusinessForm({
           </div>
           <div className="mt-4 flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-sm">
             <span className="font-medium text-slate-700">Catchy Trust Score</span>
-            <span className="font-semibold text-slate-900">{Number(form.trust_score) || 0}</span>
+            <span className="font-semibold text-slate-900">{trustScore}</span>
           </div>
           <div className="mt-2">
             <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${getTrustLevelClasses(trustLevel)}`}>
@@ -529,9 +580,19 @@ function ScoreField({
   value: number;
   onChange: (next: number) => void;
 }) {
+  const handleChange = (raw: string) => {
+    const parsed = Number(raw || 0);
+    if (!Number.isFinite(parsed)) {
+      onChange(0);
+      return;
+    }
+
+    onChange(Math.max(0, Math.min(20, Math.round(parsed))));
+  };
+
   return (
     <Field label={label}>
-      <input type="number" min={0} max={100} value={value} onChange={(e) => onChange(Number(e.target.value || 0))} className={inputClass} />
+      <input type="number" min={0} max={20} value={value} onChange={(e) => handleChange(e.target.value)} className={inputClass} />
     </Field>
   );
 }

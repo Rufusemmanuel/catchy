@@ -137,7 +137,7 @@ export function HeroVideo() {
           onError={() => logVideoDiagnostics("inline", inlineVideoRef.current)}
           onLoadedData={() => logVideoDiagnostics("inline", inlineVideoRef.current)}
         >
-          <source src="/videos/catchy-hero-v2.mp4" type="video/mp4" />
+          <source src="/videos/IMG_0650.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
@@ -181,7 +181,7 @@ export function HeroVideo() {
                     onError={() => logVideoDiagnostics("modal", modalVideoRef.current)}
                     onLoadedData={() => logVideoDiagnostics("modal", modalVideoRef.current)}
                   >
-                    <source src="/videos/catchy-hero-v2.mp4" type="video/mp4" />
+                    <source src="/videos/IMG_0650.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>

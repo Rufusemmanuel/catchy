@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ContactForm } from "@/components/contact-form";
 import { brandConfig } from "@/config/brand";
 
 export const metadata: Metadata = {
@@ -22,7 +21,21 @@ export default function ContactPage() {
         </p>
       </section>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <ContactForm />
+        <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+          <h2 className="heading-gradient text-2xl font-semibold sm:text-3xl">
+            Message us by email
+          </h2>
+          <p className="text-sm leading-7 text-slate-600">
+            Contact form submissions are currently disabled. For reliable delivery,
+            please email us directly and include your name, business, and request details.
+          </p>
+          <a
+            href="mailto:info.catchy1@gmail.com"
+            className="inline-flex h-11 items-center justify-center rounded-xl bg-purple-600 px-6 text-base font-medium text-white transition hover:bg-purple-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/30"
+          >
+            Email info.catchy1@gmail.com
+          </a>
+        </section>
         <aside className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
           <h2 className="heading-gradient text-2xl font-semibold sm:text-3xl">
             Direct channels
@@ -49,10 +62,10 @@ export default function ContactPage() {
           <div className="inline-flex w-full items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
             <span className="font-medium text-slate-700">Email</span>
             <a
-              href="mailto:hello@catchy.example"
+              href="mailto:info.catchy1@gmail.com"
               className="font-semibold text-slate-900 hover:text-purple-700"
             >
-              hello@catchy.example
+              info.catchy1@gmail.com
             </a>
           </div>
           <Link

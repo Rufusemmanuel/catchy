@@ -84,11 +84,8 @@ export default async function VerifiedBusinessProfilePage({
         <h2 className="heading-gradient text-2xl font-bold tracking-tight">
           Public trust profile
         </h2>
-        <p className="mt-3 text-base leading-7 text-slate-600">
-          {business.full_description || "A detailed public description will be added after the next content update."}
-        </p>
         {business.what_was_verified ? (
-          <p className="mt-4 rounded-xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">
+          <p className="mt-3 rounded-xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">
             <span className="font-semibold">What was verified:</span>{" "}
             {business.what_was_verified}
           </p>
@@ -103,6 +100,16 @@ export default async function VerifiedBusinessProfilePage({
         </div>
 
         <div className="mt-5 flex flex-wrap gap-2 text-sm font-medium">
+          {business.verified_video_url ? (
+            <a
+              href={business.verified_video_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex rounded-full border border-slate-200 px-3 py-1.5 text-[#7C3AED] hover:bg-slate-50"
+            >
+              Verified video
+            </a>
+          ) : null}
           {business.website_url ? (
             <a
               href={business.website_url}
@@ -144,6 +151,7 @@ export default async function VerifiedBusinessProfilePage({
             </a>
           ) : null}
           {!business.website_url &&
+          !business.verified_video_url &&
           !business.instagram_url &&
           !business.facebook_url &&
           !business.linkedin_url ? (

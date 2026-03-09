@@ -4,6 +4,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { verifySync } from "otplib";
 import { appendAdminAuditLog } from "@/lib/admin-audit-log";
 import {
+  isAdminIpAllowed,
+  parseAdminIpAllowlist,
+  resolveRequestIpFromMap,
+} from "@/lib/admin-ip";
+import {
   clearLoginAttempts,
   getLoginLockStatus,
   registerFailedLoginAttempt,
@@ -12,33 +17,6 @@ import { findAdminUserByEmail } from "@/lib/admin-users";
 
 if (process.env.NODE_ENV === "production" && !process.env.NEXTAUTH_SECRET) {
   throw new Error("NEXTAUTH_SECRET is required in production.");
-}
-
-function getIpAllowlist(): string[] {
-  return (process.env.CATCHY_ADMIN_IP_ALLOWLIST ?? "")
-    .split(",")
-    .map((value) => value.trim())
-    .filter(Boolean);
-}
-
-function resolveRequestIp(req: { headers?: Record<string, string | string[] | undefined> }): string {
-  const forwardedRaw = req.headers?.["x-forwarded-for"];
-  const forwarded = Array.isArray(forwardedRaw) ? forwardedRaw[0] : forwardedRaw;
-  if (forwarded) {
-    return forwarded.split(",")[0]?.trim() ?? "unknown";
-  }
-
-  const realIpRaw = req.headers?.["x-real-ip"];
-  const realIp = Array.isArray(realIpRaw) ? realIpRaw[0] : realIpRaw;
-  return (realIp ?? "unknown").trim();
-}
-
-function isIpAllowed(ip: string): boolean {
-  const allowlist = getIpAllowlist();
-  if (!allowlist.length) {
-    return true;
-  }
-  return Boolean(ip) && allowlist.includes(ip);
 }
 
 export const authOptions: NextAuthOptions = {
@@ -62,9 +40,10 @@ export const authOptions: NextAuthOptions = {
         const email = String(credentials?.email ?? "").trim().toLowerCase();
         const password = String(credentials?.password ?? "");
         const otp = String(credentials?.otp ?? "").trim();
-        const ip = resolveRequestIp(req);
+        const ip = resolveRequestIpFromMap(req.headers ?? {});
+        const allowlist = parseAdminIpAllowlist();
 
-        if (!isIpAllowed(ip)) {
+        if (!isAdminIpAllowed(ip, allowlist)) {
           await appendAdminAuditLog({
             actor_email: email || "unknown",
             action: "admin_login_failed",
